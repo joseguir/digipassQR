@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function upphp artisan make:migration create_roles_table(): void
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
@@ -23,7 +23,7 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     */
+     */php artisan make:migration create_roles_table
     public function down(): void
     {
         Schema::dropIfExists('eventos');
