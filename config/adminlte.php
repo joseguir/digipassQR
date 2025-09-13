@@ -331,7 +331,19 @@ return [
         'text' => 'Eventos',
         'url'  => 'admin/eventos', 
         'icon' => 'fas fa-calendar-alt', // ícono FontAwesome
-    ],
+        ],
+         [
+            'text' => 'Usuarios',
+            'url'  => 'admin/usuarios',
+            'icon' => 'fas fa-users',
+            'can'  => 'admin', // solo admins
+        ],
+        [
+            'text' => 'Roles',
+            'url'  => 'admin/roles',
+            'icon' => 'fas fa-user-tag',
+            'can'  => 'admin',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

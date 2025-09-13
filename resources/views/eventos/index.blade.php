@@ -13,6 +13,12 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    @can('admin')
+       <div>
+          <p>Eres el admin</p>
+       </div>
+    @endcan
+
     <table class="table table-bordered">
     <thead>
         <tr>

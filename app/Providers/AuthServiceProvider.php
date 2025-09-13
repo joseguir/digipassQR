@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
-class AppServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      */
     public function register(): void
     {
@@ -17,11 +16,14 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      */
     public function boot(): void
     {
         //
 
+         Gate::define('admin', function ($user) {
+            return $user->role->nombre === 'admin';
+        });
     }
 }
