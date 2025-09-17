@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Evento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -36,11 +37,20 @@ class EventoController extends Controller
         //
 
         $request->validate([
-            'titulo' => 'required',
-            'fecha' => 'required|date'
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'fecha' => 'required|date',
+            'direccion' => 'nullable|string|max:255',
         ]);
 
-        Evento::create($request->all());
+    
+        Evento::create([
+            'user_id' => Auth::id(), // <-- asignamos el usuario actual
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'fecha' => $request->fecha,
+            'direccion' => $request->direccion,
+        ]);
 
         return redirect()->route('eventos.index')->with('success', 'Evento creado con éxito.');
     }

@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Digipass</b>QR',
+    'logo_img' => 'vendor/adminlte/dist/img/logo-vip-preview.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -321,11 +321,11 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
+            'text' => 'Inicio',
+            'url' => 'admin',
             'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
+            // 'label' => 4,
+            // 'label_color' => 'success',
         ],
         [
         'text' => 'Eventos',
@@ -344,6 +344,25 @@ return [
             'icon' => 'fas fa-user-tag',
             'can'  => 'admin',
         ],
+        [
+            'text' => 'Lotes',
+            'url'  => 'admin/lotes',
+            'icon' => 'fas fa-layer-group',
+            'can'  => 'admin-or-organizador',
+        ],
+        [
+            'text' => 'Entradas',
+            'url'  => 'admin/entradas',
+            'icon' => 'fas fa-ticket-alt',
+            'can'  => 'admin-or-organizador',
+        ],
+        [
+            'text' => 'Validar QR',
+            'url'  => 'admin/validation',
+            'icon' => 'fas fa-qrcode',
+            'can'  => 'admin-or-organizador',
+        ],
+        
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -392,23 +411,7 @@ return [
                     'url' => '#',
                 ],
             ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+        ]
         
     ],
 

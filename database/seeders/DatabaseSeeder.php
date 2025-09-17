@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\RolesSeeder;
+use Database\Seeders\EstadosEntradaSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,13 +17,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
-
-
-          DB::table('roles')->insert([
-            ['id' => 1, 'nombre' => 'admin'],
-            ['id' => 2, 'nombre' => 'organizador'],
-            ['id' => 3, 'nombre' => 'cliente'],
+         // seeder
+         $this->call([
+            RolesSeeder::class,
+            EstadosEntradaSeeder::class,
         ]);
 
          // User::factory(10)->create();
@@ -32,6 +31,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'role_id' => 1, // admin
         ]);
+
+      
 
 
     }

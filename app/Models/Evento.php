@@ -8,5 +8,18 @@ class Evento extends Model
 {
     //
 
-    protected $fillable = ['titulo', 'descripcion', 'fecha', 'direccion'];
+    protected $fillable = ['user_id','titulo', 'descripcion', 'fecha', 'direccion'];
+
+    
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function lotes()
+    {
+        return $this->hasMany(Lote::class);
+    }
+
+
 }

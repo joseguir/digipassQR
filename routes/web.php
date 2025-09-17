@@ -6,6 +6,9 @@ use App\Models\Evento;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\EntradaController;
+use App\Http\Controllers\LoteController;
+use App\Http\Controllers\QrValidationController;
 
 
     /* Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -23,11 +26,25 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('roles', RoleController::class);
 });
 
+Route::prefix('admin')->middleware(['auth', 'role:admin, organizador'])->group(function () {
+    Route::resource('lotes', LoteController::class);
+    Route::resource('eventos', EventoController::class);
+    Route::resource('entradas', EntradaController::class);
+    Route::get('entradas/{entrada}/descargar-qr', [EntradaController::class, 'descargarQr'])->name('entradas.qr.download');
+});
+
+// Bloque separado para validación de QR
+Route::prefix('admin')->middleware(['auth', 'role:admin,organizador'])->group(function () {
+    Route::get('validation', [QrValidationController::class, 'index'])->name('validation.index');
+    Route::get('validation/{evento}', [QrValidationController::class, 'show'])->name('validation.show');
+    Route::post('validation/{evento}', [QrValidationController::class, 'validateImage'])->name('validation.validate');
+    
+});
+
 Route::get('/admin', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::resource('/admin/eventos', EventoController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -24,6 +24,9 @@
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
                     @auth
+                    <a href="{{ route('dashboard') }}" class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] text-[#1b1b18] rounded-sm text-sm leading-normal">
+                        Dashboard
+                    </a>
 
                          <!-- Botón de Cerrar Sesión -->
                     <form method="POST" action="{{ route('logout') }}">
