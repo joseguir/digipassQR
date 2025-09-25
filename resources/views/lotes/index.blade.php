@@ -18,8 +18,8 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Evento</th>
                         <th>Nombre</th>
+                         <th>Evento</th>
                         <th>Cantidad</th>
                         <th>Acciones</th>
                     </tr>
@@ -27,8 +27,8 @@
                 <tbody>
                     @foreach($lotes as $lote)
                         <tr>
-                            <td>{{ $lote->evento->titulo }}</td>
                             <td>{{ $lote->nombre }}</td>
+                            <td>{{ $lote->evento->titulo }}</td>
                             <td>{{ $lote->cantidad }}</td>
                             <td>
                                 <a href="{{ route('lotes.edit', $lote->id) }}" class="btn btn-warning btn-sm">Editar</a>

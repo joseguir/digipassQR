@@ -9,6 +9,9 @@ use App\Models\User;
 use App\Models\EstadosEntrada;
 use App\Models\Lote;
 use Illuminate\Support\Str;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Encoding\Encoding;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -20,7 +23,9 @@ class EntradaController extends Controller
     public function index()
     {
         //
-        $entradas = Entrada::with(['lote.evento', 'usuario', 'estado'])->get();
+        $entradas = Entrada::with(['lote.evento', 'usuario', 'estado'])
+        ->orderBy('created_at', 'desc') 
+        ->get();
         return view('entradas.index', compact('entradas'));
     }
 
@@ -92,17 +97,27 @@ class EntradaController extends Controller
     public function destroy(Entrada $entrada)
     {
         //
+
+        $entrada->delete(); // elimina la entrada
+        return redirect()->route('entradas.index')
+                        ->with('success', 'Entrada eliminada correctamente');
     }
 
     public function descargarQr(Entrada $entrada)
     {
         // Genera el QR en formato PNG
         $filename = 'entrada-' . $entrada->id . '.png';
-        
-        $qr = QrCode::format('png')->size(300)->generate($entrada->codigo_qr);
 
-        return response($qr)
-            ->header('Content-Type', 'image/png')
-            ->header('Content-Disposition', "attachment; filename={$filename}");
+    $result = Builder::create()
+        ->writer(new PngWriter())            // PNG
+        ->data($entrada->codigo_qr)          // El contenido del QR
+        ->encoding(new Encoding('UTF-8'))    // Codificación
+        ->size(300)                          // Tamaño
+        ->build();
+
+    return response($result->getString())
+        ->header('Content-Type', 'image/png')
+        ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
+
     }
 }

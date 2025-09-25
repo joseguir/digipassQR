@@ -15,7 +15,7 @@
             <select name="lote_id" class="form-control" required>
                 @foreach($lotes as $lote)
                     <option value="{{ $lote->id }}">
-                        {{ $lote->evento->titulo }} - {{ $lote->nombre }} (Precio: ${{ $lote->precio }})
+                        Lote {{ $lote->nombre }} - {{ $lote->evento->titulo }} (Precio: ${{ $lote->precio }})
                     </option>
                 @endforeach
             </select>
