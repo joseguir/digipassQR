@@ -113,11 +113,25 @@
             @endif
         </header>
         <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-                
+            <main class=" max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
+                <h1 class="text-4xl font-bold text-green-800 mb-8">Eventos</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-11/12 max-w-6xl">
+                    @forelse ($eventos as $evento)
+                        <div class="bg-green-200 rounded-lg shadow-lg p-6 hover:bg-green-300 transition duration-300">
+                            <h2 class="text-2xl font-semibold text-green-900 mb-2">{{ $evento->titulo }}</h2>
+                            <p class="text-green-800 mb-4">{{ $evento->descripcion }}</p>
+                            <p class="text-sm text-green-700">📅 {{ $evento->fecha }}</p>
+                        </div>
+                    @empty
+                        <div class="col-span-full text-center text-green-900">
+                            <p class="text-lg">No hay eventos disponibles por el momento 🌱</p>
+                        </div>
+                    @endforelse
+                </div>
             </main>
         </div>
-
+        
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif

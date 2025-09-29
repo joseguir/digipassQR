@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\EntradaController;
+use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\LoteController;
 use App\Http\Controllers\QrValidationController;
 
@@ -16,9 +17,7 @@ use App\Http\Controllers\QrValidationController;
     });
     */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
 
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
