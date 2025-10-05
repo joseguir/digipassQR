@@ -20,6 +20,17 @@ class ClientesController extends Controller
     {
         // Traer todos los eventos al dashboard
         $eventos = Evento::all();
-        return view('welcome', compact('eventos'));
+        return view('home', compact('eventos'));
+    }
+    public function eventoDetalle($id)
+    {
+        // Buscar el evento con sus lotes asociados
+        $evento = Evento::with('lotes')->findOrFail($id);
+
+        // Obtener solo los lotes de ese evento
+        $lotes = $evento->lotes;
+
+        // Retornar a una vista donde los muestres
+        return view('frontend.pages.evento', compact('evento', 'lotes'));
     }
 }

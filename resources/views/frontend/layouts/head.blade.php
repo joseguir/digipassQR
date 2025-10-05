@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>@yield('title', 'Campus Virtual')</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/52ab3134b2.js" crossorigin="anonymous"></script>
 
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,121 +26,3 @@
         <!-- Css Propios -->
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     </head>
-    <body class="bg-[#FDFDFC] text-[#1b1b18]">
-        <header class="w-full text-sm mb-6 not-has-[nav]:hidden ">
-            @if (Route::has('login'))
-            <nav class="relative bg-gray-800 w-full">
-                <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                    <div class="relative flex h-16 items-center justify-between">
-                        
-                        <!-- Botón menú móvil -->
-                        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                            <button type="button" command="--toggle" commandfor="mobile-menu" 
-                                class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-                                <span class="absolute -inset-0.5"></span>
-                                <span class="sr-only">Open main menu</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 in-aria-expanded:hidden">
-                                    <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 not-in-aria-expanded:hidden">
-                                    <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        <!-- Logo -->
-                        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                            <div class="flex shrink-0 items-center">
-                                <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Logo" class="h-8 w-auto" />
-                            </div>
-                            
-                            <!-- Links desktop -->
-                            <div class="hidden sm:ml-6 sm:block">
-                                <div class="flex space-x-4">
-                                    <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Inicio</a>
-                                    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Proyectos</a>
-                                    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Servicios</a>
-                                    <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Contacto</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Autenticación -->
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                            @auth
-                                <a href="{{ route('dashboard') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
-                                    Dashboard
-                                </a>
-                                <form method="POST" action="{{ route('logout') }}" class="ml-2">
-                                    @csrf
-                                    <button type="submit" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
-                                        Cerrar sesión
-                                    </button>
-                                </form>
-                            @else
-                                <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
-                                    Ingresar
-                                </a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">
-                                        Registrarse
-                                    </a>
-                                @endif
-                            @endauth
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Menú móvil -->
-                <el-disclosure id="mobile-menu" hidden class="block sm:hidden">
-                    <div class="space-y-1 px-2 pt-2 pb-3">
-                        <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Inicio</a>
-                        <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Proyectos</a>
-                        <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Servicios</a>
-                        <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Contacto</a>
-                        
-                        @auth
-                            <a href="{{ route('dashboard') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Dashboard</a>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="w-full text-left block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">
-                                    Cerrar sesión
-                                </button>
-                            </form>
-                        @else
-                            <a href="{{ route('login') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Ingresar</a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Registrarse</a>
-                            @endif
-                        @endauth
-                    </div>
-                </el-disclosure>
-            </nav>
-
-            @endif
-        </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class=" max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-                <h1 class="text-4xl font-bold text-green-800 mb-8">Eventos</h1>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-11/12 max-w-6xl">
-                    @forelse ($eventos as $evento)
-                        <div class="bg-green-200 rounded-lg shadow-lg p-6 hover:bg-green-300 transition duration-300">
-                            <h2 class="text-2xl font-semibold text-green-900 mb-2">{{ $evento->titulo }}</h2>
-                            <p class="text-green-800 mb-4">{{ $evento->descripcion }}</p>
-                            <p class="text-sm text-green-700">📅 {{ $evento->fecha }}</p>
-                        </div>
-                    @empty
-                        <div class="col-span-full text-center text-green-900">
-                            <p class="text-lg">No hay eventos disponibles por el momento 🌱</p>
-                        </div>
-                    @endforelse
-                </div>
-            </main>
-        </div>
-        
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
-    </body>
-</html>

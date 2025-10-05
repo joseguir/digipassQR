@@ -18,6 +18,7 @@ use App\Http\Controllers\QrValidationController;
     */
 
 Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
+Route::get('/evento-detalle/{id}', [ClientesController::class, 'eventoDetalle'])->name('eventoDetalle');
 
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {

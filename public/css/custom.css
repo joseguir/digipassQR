@@ -12,3 +12,118 @@
 .custom-card:hover {
     transform: scale(1.05);
 } */
+
+.container{
+    max-width: 1146px;
+}
+
+.card-evento {
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border:none;
+    padding:10px 15px;
+}
+
+.card-title{
+    font-size:1.1rem;   
+    font-weight: 500;
+}
+
+
+/* ====================== Pagina de evento.blade.php =========================== */
+
+/* Botón volver */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #e5e7eb; /* gris claro */
+    color: #065f46; /* verde oscuro */
+    font-weight: 600;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-back:hover {
+    background-color: #d1d5db; /* gris más oscuro al hover */
+}
+
+/* Card principal del evento */
+.card-detalle-evento {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+
+
+.card-detalle-evento h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #065f46;
+}
+
+.card-detalle-evento p {
+    color: #047857;
+    margin-bottom: 1rem;
+}
+
+/* Cards de lotes */
+.card-lote {
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    padding:10px 15px;
+
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+
+
+.card-lote h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #065f46;
+}
+
+.card-lote p {
+    color: #047857;
+    margin-bottom: 1rem;
+}
+
+/* Botón Comprar */
+.btn-buy {
+    background-color: #16a34a;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.btn-buy:hover, .btn-buy:active{
+    background-color: #15803d;
+    color: white;
+
+}
+
+/* Fecha del evento con icono */
+.event-date {
+    font-size: 0.875rem;
+    color: #047857;
+    display: flex;
+    align-items: center;
+}
+
+/* Título de sección */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #047857;
+}
