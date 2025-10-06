@@ -13,10 +13,12 @@ class Lote extends Model
 
     use HasFactory;
 
-    protected $fillable = ['evento_id', 
+    protected $fillable = [
+    'evento_id', 
     'nombre', 'cantidad',
     'precio',
-    'fecha_inicio', 'fecha_fin'];
+    'fecha_inicio', 
+    'fecha_fin'];
 
     protected $casts = [
         'fecha_inicio' => 'datetime',

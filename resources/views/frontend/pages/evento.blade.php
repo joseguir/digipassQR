@@ -37,7 +37,7 @@
                         <p class="text-lote">Precio: ${{ $lote->precio }}</p>
                         <p class="text-lote">Cantidad: {{ $lote->cantidad }}</p>
                         <div class="mt-3">
-                            <a href="{{ route('eventoDetalle', $evento->id) }}" class="btn btn-buy w-100">
+                            <a href="{{ route('comprar.lote', $lote->id) }}" class="btn btn-buy w-100">
                                 Comprar
                             </a>
                         </div>

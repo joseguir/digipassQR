@@ -16,9 +16,24 @@ use App\Http\Controllers\QrValidationController;
         Route::get('/admin', [AdminController::class, 'index']);
     });
     */
-
+// =========== Frontend de clientes ===============
 Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
 Route::get('/evento-detalle/{id}', [ClientesController::class, 'eventoDetalle'])->name('eventoDetalle');
+
+// Solo usuarios logueados pueden comprar
+Route::middleware(['auth'])->group(function () {
+    Route::get('/comprar/{lote}', [ClientesController::class, 'iniciarCompra'])->name('comprar.lote');
+    Route::post('/comprar', [ClientesController::class, 'guardarCompra'])->name('comprar.guardar');
+
+    
+    // Ver detalle de una entrada (usa la misma vista del admin)
+    // Route::get('/mis-entradas/{entrada}', [ClientesController::class, 'verEntrada'])
+    //     ->name('clientes.entradas.ver');
+
+    // // Listado de entradas del cliente
+    // Route::get('/mis-entradas', [ClientesController::class, 'misEntradas'])
+    //     ->name('clientes.entradas.index');
+});
 
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
