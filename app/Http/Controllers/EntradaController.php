@@ -22,12 +22,20 @@ class EntradaController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
         $entradas = Entrada::with(['lote.evento', 'usuario', 'estado'])
-        ->orderBy('created_at', 'desc') 
-        ->get();
+            ->when($user->role_id == 3, function ($query) use ($user) {
+                // Si es cliente, solo mostrar sus propias entradas
+                $query->where('usuario_id', $user->id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('entradas.index', compact('entradas'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

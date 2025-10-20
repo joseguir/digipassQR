@@ -332,7 +332,7 @@ return [
         'url'  => 'admin/eventos', 
         'icon' => 'fas fa-calendar-alt', // ícono FontAwesome
         ],
-         [
+        [
             'text' => 'Usuarios',
             'url'  => 'admin/usuarios',
             'icon' => 'fas fa-users',
@@ -354,7 +354,7 @@ return [
             'text' => 'Entradas',
             'url'  => 'admin/entradas',
             'icon' => 'fas fa-ticket-alt',
-            'can'  => 'admin-or-organizador',
+            'can'  => 'admin-or-organizador-or-cliente',
         ],
         [
             'text' => 'Validar QR',

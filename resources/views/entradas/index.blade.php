@@ -33,13 +33,25 @@
                     <td>{{ $entrada->codigo_qr }}</td>
                     <td>{{ $entrada->fecha_compra }}</td>
                     <td>
-                    <a href="{{ route('entradas.show', $entrada) }}" class="btn btn-info btn-sm">Ver</a>
-                        <a href="{{ route('entradas.edit', $entrada) }}" class="btn btn-primary btn-sm">Editar</a>
-                        <form action="{{ route('entradas.destroy', $entrada) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar entrada?')">Eliminar</button>
-                        </form>
+                        <!-- Botón Ver: todos los usuarios -->
+                        <a href="{{ route('entradas.show', $entrada) }}" class="btn btn-info btn-sm">Ver</a>
+
+                        @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
+                            <!-- Botones Editar y Eliminar: solo admin y organizador -->
+                            <a href="{{ route('entradas.edit', $entrada) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="{{ route('entradas.destroy', $entrada) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
+                        @elseif(auth()->user()->role_id == 3)
+                            <!-- Botón Cancelar: solo clientes -->
+                            <form action="{{ route('entradas.destroy', $entrada) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach

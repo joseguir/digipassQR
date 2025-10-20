@@ -50,14 +50,15 @@ class ClientesController extends Controller
     
     public function guardarCompra(Request $request)
     {
-         //
-         $request->validate([
+        // dd($request->all());
+
+        $request->validate([
             'lote_id'    => 'required|exists:lotes,id',
             'usuario_id' => 'required|exists:users,id',
-            'estado_id'  => 'required|exists:estados_entrada,id',
+            // 'estado_id'  => 'required|exists:estados_entrada,id',
         ]);
 
-        Entrada::create([
+        $entrada = Entrada::create([
             'lote_id'     => $request->lote_id,
             'usuario_id'  => $request->usuario_id,
             'codigo_qr'   => Str::uuid(), // genera código único
@@ -65,8 +66,7 @@ class ClientesController extends Controller
             'fecha_compra'=> now(),
         ]);
 
-        // return redirect()->route('entradas.index')->with('success', 'Entrada creada correctamente');
-
-        return redirect()->route('dashboard')->with('success', '¡Compra realizada con éxito!');
+        return redirect()->route('entradas.show', $entrada)
+                     ->with('success', '¡Compra realizada con éxito!');
     }
 }
