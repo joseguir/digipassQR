@@ -8,7 +8,7 @@ class Evento extends Model
 {
     //
 
-    protected $fillable = ['user_id','titulo', 'descripcion', 'fecha', 'direccion'];
+    protected $fillable = ['user_id','titulo', 'img', 'descripcion', 'fecha', 'direccion'];
 
     
     public function usuario()

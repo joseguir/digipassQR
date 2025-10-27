@@ -3,38 +3,46 @@
 @section('title', 'Eventos')
 
 @section('content_header')
-     <h1>Lista de eventos</h1>
+    <h1>Lista de eventos</h1>
 @endsection
 
 @section('content')
-    <a href="{{ route('eventos.create') }}"  class="btn btn-primary mb-3">Crear Evento</a>
+    <a href="{{ route('eventos.create') }}" class="btn btn-primary mb-3">Crear Evento</a>
 
-     @if(session('success'))
+    @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     @can('admin')
-       <div>
-          <p>Eres el admin</p>
-       </div>
+        <div class="mb-3">
+            <p>Eres el admin</p>
+        </div>
     @endcan
 
-    <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Fecha</th>
-            <th>Direccion</th>
-            <th>Acciones</th>
-        </tr>
-     </thead>
-      <tbody>
-            @foreach($eventos as $evento)
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Imagen</th>
+                <th>Título</th>
+                <th>Fecha</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($eventos as $evento)
                 <tr>
                     <td>{{ $evento->id }}</td>
+                    <td>
+                        @if($evento->img && file_exists(public_path($evento->img)))
+                            <img src="{{ asset($evento->img) }}" alt="Imagen del evento" class="img-thumbnail" style="max-width: 80px;">
+                        @else
+                            <span class="text-muted">Sin imagen</span>
+                        @endif
+                    </td>
                     <td>{{ $evento->titulo }}</td>
-                    <td>{{ $evento->fecha }}</td>
+                    <td>{{ \Carbon\Carbon::parse($evento->fecha)->format('d/m/Y H:i') }}</td>
                     <td>{{ $evento->direccion }}</td>
                     <td>
                         <a href="{{ route('eventos.show', $evento) }}" class="btn btn-info btn-sm">Ver</a>
@@ -46,8 +54,11 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No hay eventos registrados.</td>
+                </tr>
+            @endforelse
         </tbody>
-   </table>
+    </table>
 @stop
-

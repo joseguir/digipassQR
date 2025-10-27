@@ -17,11 +17,15 @@
     <div class="card card-detalle-evento mb-4">
         <div class="card-body">
             <h1 class="card-title">{{ $evento->titulo }}</h1>
-            <p class="card-text">{{ $evento->descripcion }}</p>
+            <p class="card-text description-event">{{ $evento->descripcion }}</p>
             <p class="event-date">
                 <i class="fa fa-calendar-alt me-1"></i>
-                {{ $evento->fecha }}
+                {{ \Carbon\Carbon::parse($evento->fecha)->format('d-m-Y H:i') }}
+
             </p>
+        </div>
+        <div class="card-img">
+            <img src="{{ asset($evento->img) }}" alt="">
         </div>
     </div>
 

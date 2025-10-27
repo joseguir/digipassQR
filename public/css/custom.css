@@ -49,16 +49,62 @@
     background-color: #d1d5db; /* gris más oscuro al hover */
 }
 
+.container-cards-eventos{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: space-around;
+}
+.card-evento-poster{
+    width:500px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+.card-evento-poster .btn-container{
+    width:100%;
+}
+.card-evento-poster .card-body{
+    width:50%;
+}
+.img-container-card {
+    height: 280px;
+    width:50%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* fondo neutro si la imagen no llena todo */
+}
+
+.img-container-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ajusta sin deformar, recortando si es necesario */
+    object-position: center; /* centra la imagen */
+    display: block;
+}
+
 /* Card principal del evento */
 .card-detalle-evento {
     background-color: #ffffff;
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 1.5rem;
+    padding: 30px 60px;
     transition: transform 0.3s, box-shadow 0.3s;
+    display:flex;
+    flex-direction:row;
 }
-
-
+.card-detalle-evento .card-img{
+    width:400px;
+}
+.card-detalle-evento .card-img img{
+    border-radius:10px;
+}
+.card-detalle-evento .card-body{
+    padding:0;
+}
 
 .card-detalle-evento h1 {
     font-size: 2.25rem;
@@ -82,7 +128,9 @@
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
-
+.description-event{
+    height:120px;
+}
 
 .card-lote h3 {
     font-size: 1.25rem;
@@ -95,6 +143,8 @@
     /* color: #047857; */
     margin-bottom: 1rem;
 }
+
+
 
 /* Botón Comprar */
 .btn-buy {

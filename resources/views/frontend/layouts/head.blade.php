@@ -25,4 +25,6 @@
 
         <!-- Css Propios -->
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        <!-- Css de la animacion hero_home -->
+        <link rel="stylesheet" href="{{ asset('css/hero_home.css') }}">
     </head>
