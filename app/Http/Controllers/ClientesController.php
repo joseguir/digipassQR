@@ -38,9 +38,9 @@ class ClientesController extends Controller
         $user = auth()->user();
 
         // Si no es cliente 
-        if ($user->role_id !== 3) {
-            return redirect('/')->with('error', 'Solo los clientes pueden comprar entradas.');
-        }
+        // if ($user->role_id !== 3) {
+        //     return redirect('/')->with('error', 'Solo los clientes pueden comprar entradas.');
+        // }
 
         $lote = Lote::findOrFail($loteId);
         $evento = $lote->evento;

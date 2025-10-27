@@ -70,8 +70,9 @@
                         </div>
                         <div class="card-body d-flex flex-column">
                             <h3 class="card-title">{{ $evento->titulo }}</h3>
-                            <p class="card-text flex-grow-1">
-                                {{ \Illuminate\Support\Str::words($evento->descripcion, 100, '...') }}
+                            <p class="card-text descripcion_evento_card flex-grow-1">
+                            {{ \Illuminate\Support\Str::limit($evento->descripcion, 130, '...') }}
+
                             </p>
                             <p class="text-success">
                                 <i class="fa fa-calendar-alt me-1"></i>
