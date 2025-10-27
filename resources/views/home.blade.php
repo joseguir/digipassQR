@@ -10,14 +10,27 @@
             <div class="container">
                 <div class="container-wrap-inicio">
                     <div class="left-div presentacion ">
-                        <h2 data-aos="fade-right" data-aos-delay="150">Con DigipassQR, vendé y cobrá al instante.</h2>
-                        <p data-aos="fade-up" 
-                        data-aos-delay="250">Vendé tus entradas online de forma simple y segura.
-                        </p>
-                        <p class=" presupuesto-text" data-aos="fade-up" 
-                        data-aos-delay="350">DigipassQR hace fácil la venta de tickets.</p>
-                        <button class="btn btn-main btn-primary" data-aos="fade-right" 
-                        data-aos-delay="450">Contáctanos</button>
+                        <div class="container-titles">
+
+                            <p data-aos="fade-right" data-aos-delay="150" class="subtitle_home">Con DigipassQR, vendé y cobrá al instante.</p>
+                            <h2 data-aos="fade-up" 
+                            data-aos-delay="250" class="title_home">Vendé tus <span class="text-resaltado">entradas online</span> de forma segura.
+                            </h2>
+                        </div>
+                            <p class=" slogan_home" data-aos="fade-up" 
+                            data-aos-delay="350">DigipassQR hace fácil la venta de tickets.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fa-solid fa-qrcode me-2 text-primary"></i>Generá códigos QR únicos para cada entrada</li>
+                            <li><i class="fa-solid fa-bolt me-2 text-warning"></i>Ofrecé una experiencia moderna y segura</li>
+                            <li><i class="fa-solid fa-circle-check me-2 text-success"></i>Cobrá tus ingresos al momento</li>
+                        </ul>
+
+                        <div class="btn-container">
+                            <button class="btn-main" data-aos="fade-right" 
+                            data-aos-delay="450">Crear cuenta gratis</button>
+                            <button class="btn btn-warning">Contáctanos</button>
+
+                        </div>
 
 
                     </div>

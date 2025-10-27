@@ -1,13 +1,44 @@
+:root {
+    /* Azul oscuro principal */
+    --azul-base: #1B263B;
+
+    /* Variantes */
+    --azul-oscuro-1: #0D1B2A; /* muy profundo */
+    --azul-oscuro-2: #162447; /* intenso, moderno */
+    --azul-oscuro-3: #112D4E; /* equilibrado, versátil */
+    --azul-oscuro-4: #0B3C5D; /* matiz frío, confianza */
+    --azul-vivo: #1A1F71;     /* más vivo, tecnológico */
+
+    /* Verdes tecnológicos */
+    --verde-1: #1ABC9C;
+    --verde-2: #16A085;
+    --verde-3: #0E7C61;
+    --verde-4: #149174;
+    --verde-5: #117A65;
+
+    /* Colores complementarios para textos y detalles */
+    --blanco: #ffffff;
+    --gris-claro: #f5f5f5;
+    --gris-medio: #cccccc;
+}
+
+.text-resaltado{
+    color:var(--verde-1);
+}
+
 /* ---------------------- Inicio ------------------------ */
 
   #top-page{
     padding-bottom:70px;
+    margin-top:-30px;
+    background-color: var(--azul-oscuro-4);
+    color: var(--blanco);
   }
   .container-wrap-inicio {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    /* padding:50px 0; */
+    padding:50px 0;
   }
   .left-div {
     width: 45%;
@@ -17,28 +48,34 @@
     width: 55%;
   }
   
-  /* .btn-main {
-    background: var(--whiteDegrade);
-    color: var(--blueDark-1);
-    font-size: 1.25rem;
+  .btn-main {
+    background: var(--verde-1);
+    color: var(--blanco);
+    font-size: 1rem;
     padding: 0 15px;
-  } */
+    border-radius:7px;
+}
   .presentacion {
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
     /* color: #fafafa; */
   }
-  .presentacion h2 {
-    font-size: 5rem;
-    text-align: center;
+  .title_home {
+    font-size: 2.3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    /* text-align: center; */
   }
   
-  .presentacion p {
-    font-size: 1.1rem;
-  }
-  .presentacion .presupuesto-text {
+  .subtitle_home {
+    font-size: 1.05rem;
     font-weight: bold;
-    font-size: 1.3rem;
-    letter-spacing: 0.1em;
+  }
+  .slogan_home {
+    font-weight: bold;
+    font-size: 1.1rem;
   }
   
   .presentacion-img {
@@ -57,6 +94,13 @@
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
   }
   
+
+  .presentacion .btn-container{
+    display: flex;
+    /* justify-content: space-around; */
+    gap:20px;
+  }
+
   .phone-inicio {
     /* width:350px; */
     position: absolute;

@@ -1,7 +1,11 @@
 /* Fondo del body más personalizado */
-/* body {
-    background: linear-gradient(135deg, #bbf7d0, #86efac);
-} */
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    letter-spacing: 0.3px;
+}
 
 /* Card con borde más marcado */
 /* .custom-card {
@@ -52,7 +56,8 @@
 .container-cards-eventos{
     display:flex;
     flex-wrap:wrap;
-    justify-content: space-around;
+    gap:30px;
+    /* justify-content: space-around; */
 }
 .card-evento-poster{
     width:500px;
