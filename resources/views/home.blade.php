@@ -38,15 +38,15 @@
                         <div class="container-img-inicio  ">
                             <img class="phone-inicio" src="{{ asset('img/phone-inicio.webp') }}" alt="">
                             <div class="phone-box box-1 in-place">
-                                <img class="p" src="{{ asset('img/phone-box-1.webp') }}" alt="">
+                                <img class="p" src="{{ asset('img/qr_mock.png') }}" alt="">
 
                             </div>
                             <div class="phone-box box-2 in-place">
-                                <img class="" src="{{ asset('img/phone-box-3.webp') }}" alt="">
+                                <img class="" src="{{ asset('img/qr_mock1.jpg') }}" alt="">
 
                             </div>
                             <div class="phone-box box-3 in-place">
-                                <img class="" src="{{ asset('img/phone-box-2.webp') }}" alt="">
+                                <img class="" src="{{ asset('img/qr_mock.webp') }}" alt="">
 
                             </div>
                         </div>
