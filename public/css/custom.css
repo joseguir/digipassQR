@@ -1,7 +1,11 @@
 /* Fondo del body más personalizado */
-/* body {
-    background: linear-gradient(135deg, #bbf7d0, #86efac);
-} */
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    letter-spacing: 0.3px;
+}
 
 /* Card con borde más marcado */
 /* .custom-card {
@@ -22,6 +26,10 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border:none;
     padding:10px 15px;
+}
+
+.descripcion_evento_card{
+    font-size:.85rem;
 }
 
 .card-title{
@@ -49,16 +57,68 @@
     background-color: #d1d5db; /* gris más oscuro al hover */
 }
 
+.container-cards-eventos{
+    display:flex;
+    flex-wrap:wrap;
+    gap:30px;
+    /* justify-content: space-around; */
+}
+.card-evento-poster{
+    width:500px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+.card-evento-poster .btn-container{
+    width:100%;
+}
+.card-evento-poster .card-body{
+    width:50%;
+}
+.img-container-card {
+    height: 280px;
+    width:50%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* fondo neutro si la imagen no llena todo */
+}
+
+.img-container-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ajusta sin deformar, recortando si es necesario */
+    object-position: center; /* centra la imagen */
+    display: block;
+}
+
 /* Card principal del evento */
 .card-detalle-evento {
     background-color: #ffffff;
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 1.5rem;
+    padding: 30px 60px;
     transition: transform 0.3s, box-shadow 0.3s;
+    display:flex;
+    flex-direction:row;
 }
-
-
+.card-detalle-evento .card-img{
+    width:400px;
+    display:flex;
+    justify-content: end;
+}
+.card-detalle-evento .card-img img{
+    width:80%;
+    border-radius:10px;
+}
+.card-detalle-evento .card-body{
+    max-width:600px;
+    padding:0;
+    padding-right:30px;
+}
 
 .card-detalle-evento h1 {
     font-size: 2.25rem;
@@ -82,7 +142,9 @@
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
-
+.description-event{
+    min-height:120px;
+}
 
 .card-lote h3 {
     font-size: 1.25rem;
@@ -96,25 +158,66 @@
     margin-bottom: 1rem;
 }
 
-/* Botón Comprar */
-.btn-buy {
-    background-color: #16a34a;
-    color: white;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.3s;
-    text-align: center;
+
+/* ======================== Compra de entradas ========================= */
+/* Cards */
+.card.card-form {
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease-in-out;
+}
+.card.card-form:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
-.btn-buy:hover, .btn-buy:active{
-    background-color: #15803d;
-    color: white;
+/* Inputs */
+.form-control {
+    border-radius: 8px;
+}
 
+/* Métodos de pago */
+.metodo-pago-card {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 2px solid #dee2e6;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.2s;
+    font-weight: 500;
+    font-size: 1.1rem;
+    background:var(--blanco);
+}
+.metodo-pago-card i {
+    font-size: 1.5rem;
+    margin-right: 12px;
+}
+.metodo-pago-card:hover {
+    border-color: var(--verde-1);
+    background-color: #f0f8ff;
+}
+.metodo-pago-card input {
+    display: none;
+}
+.metodo-pago-card input:checked + label {
+    border-color: var(--verde-1);
+    background-color: #e0f0ff;
+}
+
+/* Botón */
+.btn-main.btn-compra {
+    display:flex;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 1rem;
 }
 
 /* Fecha del evento con icono */
 .event-date {
+    padding-top:30px;
     font-size: 0.875rem;
     /* color: #047857; */
     display: flex;
@@ -127,3 +230,5 @@
     font-weight: 600;
     /* color: #047857; */
 }
+
+

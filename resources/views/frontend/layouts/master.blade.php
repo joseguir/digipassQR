@@ -11,10 +11,13 @@
     @include( 'frontend.layouts.navigator')
 
     {{-- Contenido principal --}}
-    <main class="bg-gray-50 min-h-screen py-8">
+    <main class="bg-gray-50 min-h-screen ">
         @yield('content')
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<!-- JS Propios -->
+<script src="js/main.js"></script>
 </body>
+
 
 </html>
