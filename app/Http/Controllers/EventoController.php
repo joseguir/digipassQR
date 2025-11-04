@@ -8,15 +8,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use function PHPUnit\Framework\returnSelf;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class EventoController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        $eventos = Evento::all();
+        $eventos = Evento::where('user_id', auth()->id())->get();
         return view('eventos.index', compact('eventos'));
     }
 
@@ -79,6 +82,9 @@ class EventoController extends Controller
     public function edit(Evento $evento)
     {
         //
+
+        $this->authorize('update', $evento);
+
         return view('eventos.edit', compact('evento'));
     }
 
@@ -87,6 +93,8 @@ class EventoController extends Controller
      */
     public function update(Request $request, Evento $evento)
     {
+        $this->authorize('update', $evento);
+
         $request->validate([
             'titulo' => 'required|string|max:255',
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',

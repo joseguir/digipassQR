@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Lote;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class LoteController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -63,6 +65,8 @@ class LoteController extends Controller
     public function edit(Lote $lote)
     {
         //
+        $this->authorize('update', $lote);
+
         $usuario = Auth::user();
         $eventos = $usuario->eventos()->get(); // Solo eventos propios
         
@@ -75,6 +79,7 @@ class LoteController extends Controller
     public function update(Request $request, Lote $lote)
     {
         //
+        $this->authorize('update', $lote);
 
         $request->validate([
             'evento_id' => 'required|exists:eventos,id',
@@ -94,6 +99,8 @@ class LoteController extends Controller
     public function destroy(Lote $lote)
     {
         //
+          $this->authorize('delete', $lote);
+
         $lote->delete();
         return redirect()->route('lotes.index')->with('success', 'Lote eliminado correctamente');
     }

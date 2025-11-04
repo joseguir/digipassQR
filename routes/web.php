@@ -23,7 +23,8 @@ Route::middleware(['auth'])->group(function () {
 
 // =========== Panel Admin / Organizadores / Clientes (solo para entradas) ===============
 Route::prefix('admin')->middleware(['auth', 'role:admin,organizador,cliente'])->group(function () {
-    Route::resource('entradas', EntradaController::class);
+    Route::get('entradas', [EntradaController::class, 'index'])->name('entradas.index');
+    Route::get('entradas/{entrada}', [EntradaController::class, 'show'])->name('entradas.show');
     Route::get('entradas/{entrada}/descargar-qr', [EntradaController::class, 'descargarQr'])
         ->name('entradas.qr.download');
 });

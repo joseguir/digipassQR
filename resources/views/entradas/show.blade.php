@@ -4,7 +4,6 @@
     use SimpleSoftwareIO\QrCode\Facades\QrCode;
 @endphp
 
-
 @section('title', 'Detalle de Entrada')
 
 @section('content_header')
@@ -12,24 +11,42 @@
 @stop
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <p><strong>Evento:</strong> {{ $entrada->lote->evento->titulo }}</p>
-            <p><strong>Lote:</strong> {{ $entrada->lote->nombre }}</p>
-            <p><strong>Precio:</strong> ${{ $entrada->lote->precio }}</p>
-            <p><strong>Usuario:</strong> {{ $entrada->usuario->name }} ({{ $entrada->usuario->email }})</p>
-            <p><strong>Estado:</strong> {{ ucfirst($entrada->estado->nombre) }}</p>
-            <p><strong>Fecha de Compra:</strong> {{ $entrada->fecha_compra }}</p>
-            <p><strong>Código QR:</strong></p>
-            <div>
-                {!! QrCode::size(200)->generate($entrada->codigo_qr) !!}
+    <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{{ $entrada->lote->evento->titulo }} - {{ $entrada->lote->nombre }}</h4>
             </div>
-            <a href="{{ route('entradas.qr.download', $entrada) }}" class="btn btn-success mt-2">
-                Descargar QR
-            </a>
+            <div class="card-body">
 
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p><strong>Precio:</strong> ${{ $entrada->lote->precio }}</p>
+                        <p><strong>Usuario:</strong> {{ $entrada->usuario->name }} <br> <small>{{ $entrada->usuario->email }}</small></p>
+                        <p><strong>Estado:</strong> <span class="badge bg-info">{{ ucfirst($entrada->estado->nombre) }}</span></p>
+                         <p>
+                            <strong>Fecha de Compra:</strong>
+                            {{ \Carbon\Carbon::parse($entrada->fecha_compra)->locale('es')->isoFormat('D [de] MMMM') }}
+                           
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <p><strong>Código QR:</strong></p>
+                        <div class="mb-2">
+                            {!! QrCode::size(200)->generate($entrada->codigo_qr) !!}
+                        </div>
+                        <a href="{{ route('entradas.qr.download', $entrada) }}" class="btn btn-success">
+                            Descargar QR
+                        </a>
+                    </div>
+                </div>
+
+               
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <a href="{{ route('entradas.index') }}" class="btn btn-secondary">Volver al listado</a>
         </div>
     </div>
-
-    <a href="{{ route('entradas.index') }}" class="btn btn-secondary mt-2">Volver al listado</a>
 @stop
