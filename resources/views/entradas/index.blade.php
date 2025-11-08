@@ -8,6 +8,12 @@
 
 @section('content')
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -35,22 +41,7 @@
                         <!-- Botón Ver: todos los usuarios -->
                         <a href="{{ route('entradas.show', $entrada) }}" class="btn btn-info btn-sm">Ver Entrada</a>
 
-                         @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
-                            <!-- Botones Editar y Eliminar: solo admin y organizador -->
-                           <!--  <a href="" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                            </form> -->
-                        @elseif(auth()->user()->role_id == 3)
-                            <!-- Botón Cancelar: solo clientes -->
-                           <!--  <form action="{{ route('entradas.destroy', $entrada) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
-                            </form> -->
-                        @endif 
+                        
                     </td>
                 </tr>
             @endforeach

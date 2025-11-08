@@ -328,9 +328,10 @@ return [
             // 'label_color' => 'success',
         ],
         [
-        'text' => 'Eventos',
-        'url'  => 'admin/eventos', 
-        'icon' => 'fas fa-calendar-alt', // ícono FontAwesome
+            'text' => 'Eventos',
+            'url'  => 'admin/eventos', 
+            'icon' => 'fas fa-calendar-alt', // ícono FontAwesome
+            'can'  => 'admin-or-organizador',
         ],
         [
             'text' => 'Usuarios',
@@ -435,6 +436,8 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
+        /* Filtro personalizado */
+        App\Http\Filters\EntradasMenuFilter::class,
     ],
 
     /*

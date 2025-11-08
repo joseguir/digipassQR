@@ -20,7 +20,8 @@ class Entrada extends Model
         'usuario_id',
         'codigo_qr',
         'estado_id',
-        'fecha_compra'
+        'fecha_compra',
+        'is_used'
     ];
 
     public function lote()

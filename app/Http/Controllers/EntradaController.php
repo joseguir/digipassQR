@@ -23,16 +23,22 @@ class EntradaController extends Controller
     public function index()
     {
         $user = auth()->user();
+        
+       $entradas = Entrada::with(['lote.evento', 'usuario', 'estado'])
+        ->when($user->role_id == 2, function ($query) use ($user) {
+            // Si es organizador, mostrar solo las entradas de los eventos que organizó
+            $query->whereHas('lote.evento', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        })
+        ->when($user->role_id == 3, function ($query) use ($user) {
+            // Si es cliente, mostrar solo sus propias entradas
+            $query->where('usuario_id', $user->id);
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        $entradas = Entrada::with(['lote.evento', 'usuario', 'estado'])
-            ->when($user->role_id == 3, function ($query) use ($user) {
-                // Si es cliente, solo mostrar sus propias entradas
-                $query->where('usuario_id', $user->id);
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('entradas.index', compact('entradas'));
+       return view('entradas.index', compact('entradas'));
     }
 
 

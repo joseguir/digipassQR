@@ -53,20 +53,24 @@ class ClientesController extends Controller
         // dd($request->all());
 
         $request->validate([
-            'lote_id'    => 'required|exists:lotes,id',
-            'usuario_id' => 'required|exists:users,id',
-            // 'estado_id'  => 'required|exists:estados_entrada,id',
-        ]);
+        'lote_id'    => 'required|exists:lotes,id',
+        'usuario_id' => 'required|exists:users,id',
+        'cantidad'   => 'required|integer|min:1',
+            ]);
 
-        $entrada = Entrada::create([
-            'lote_id'     => $request->lote_id,
-            'usuario_id'  => $request->usuario_id,
-            'codigo_qr'   => Str::uuid(), // genera código único
-            'estado_id'   => 2, //no usada
-            'fecha_compra'=> now(),
-        ]);
+        for ($i = 0; $i < $request->cantidad; $i++) {
+            Entrada::create([
+                'lote_id'      => $request->lote_id,
+                'usuario_id'   => $request->usuario_id,
+                'codigo_qr'    => Str::uuid(),
+                'estado_id'    => 2, // opcional, si lo vas a eliminar después
+                'fecha_compra' => now(),
+                'is_used'      => false,
+            ]);
+        }
 
-        return redirect()->route('entradas.show', $entrada)
-                     ->with('success', '¡Compra realizada con éxito!');
-    }
+        return redirect()
+            ->route('entradas.index')
+            ->with('success', '¡Compra realizada con éxito! Se generaron ' . $request->cantidad . ' entradas.');
+        }
 }
