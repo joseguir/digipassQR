@@ -10,6 +10,7 @@ use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\LoteController;
 use App\Http\Controllers\QrValidationController;
+use App\Http\Controllers\NotificacionController;
 
 // =========== Frontend de clientes ===============
 Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
@@ -46,6 +47,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin,organizador'])->group(fu
     Route::get('validation', [QrValidationController::class, 'index'])->name('validation.index');
     Route::get('validation/{evento}', [QrValidationController::class, 'show'])->name('validation.show');
     Route::post('validation/{evento}', [QrValidationController::class, 'validateImage'])->name('validation.validate');
+});
+
+// =========== Rutas de Notificacion ===============
+Route::prefix('admin')->middleware(['auth', 'role:cliente'])->group( function () {
+    Route::get('notificaciones', [NotificacionController::class, 'index'])->name('notificaciones.index');
 });
 
 Route::get('/admin', function () {

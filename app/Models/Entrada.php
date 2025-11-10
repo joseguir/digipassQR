@@ -38,4 +38,9 @@ class Entrada extends Model
     {
         return $this->belongsTo(EstadoEntrada::class, 'estado_id');
     }
+
+    public function transferencias()
+    {
+        return $this->hasMany(Transferencia::class);
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\HtmlString;
+
 return [
 
     /*
@@ -356,6 +358,12 @@ return [
             'url'  => 'admin/entradas',
             'icon' => 'fas fa-ticket-alt',
             'can'  => 'admin-or-organizador-or-cliente',
+        ],
+        [
+            'text' => 'Notificaciones',
+            'url'  => 'admin/notificaciones', // la ruta a tu controlador o vista
+            'icon' => 'fas fa-bell',
+            'can'  => 'cliente', 
         ],
         [
             'text' => 'Validar QR',
