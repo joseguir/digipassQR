@@ -12,7 +12,7 @@ use App\Http\Controllers\LoteController;
 use App\Http\Controllers\QrValidationController;
 
 // =========== Frontend de clientes ===============
-Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
+Route::get('/', [ClientesController::class, 'index'])->name('home');
 Route::get('/evento-detalle/{id}', [ClientesController::class, 'eventoDetalle'])->name('eventoDetalle');
 
 // Solo usuarios logueados pueden comprar y ver sus entradas (versión pública)

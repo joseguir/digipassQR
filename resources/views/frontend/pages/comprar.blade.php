@@ -29,22 +29,22 @@
 
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre completo</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Juan Pérez" required>
+                        <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $user->name }}" placeholder="Juan Pérez" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo electrónico</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="juan@gmail.com" required>
+                        <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}" placeholder="juan@gmail.com" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="tel" name="telefono" id="telefono" class="form-control" placeholder="+54 9 11 1234 5678" required>
+                        <input type="tel" name="telefono" id="telefono" class="form-control" value="{{ $user->telefono }}" placeholder="+54 9 11 1234 5678" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="dni" class="form-label">DNI / Documento</label>
-                        <input type="text" name="dni" id="dni" class="form-control" placeholder="12345678" required>
+                        <input type="text" name="dni" id="dni" class="form-control" value="{{ $user->dni }}" placeholder="12345678" required>
                     </div>
 
                     <div class="mb-3">
@@ -77,7 +77,7 @@
                     <i class="fa-brands fa-cc-mercadopago"></i> Mercado Pago
                 </label>
             </div>
-            <div class="metodo-pago-card">
+            <!-- <div class="metodo-pago-card">
                 <input type="radio" name="metodo_pago" id="paypal" value="paypal">
                 <label for="paypal" class="d-flex align-items-center w-100">
                     <i class="fa-brands fa-paypal"></i> PayPal
@@ -88,7 +88,7 @@
                 <label for="tarjeta" class="d-flex align-items-center w-100">
                     <i class="fa-solid fa-credit-card"></i> Tarjeta de crédito/débito
                 </label>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

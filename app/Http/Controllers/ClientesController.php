@@ -45,7 +45,7 @@ class ClientesController extends Controller
         $lote = Lote::findOrFail($loteId);
         $evento = $lote->evento;
         
-        return view('frontend.pages.comprar', compact('lote', 'evento'));
+        return view('frontend.pages.comprar', compact('lote', 'evento', 'user'));
     }
     
     public function guardarCompra(Request $request)
