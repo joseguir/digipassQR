@@ -11,6 +11,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\LoteController;
 use App\Http\Controllers\QrValidationController;
 use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\GoogleController;
 
 // =========== Frontend de clientes ===============
 Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
@@ -64,5 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// =========== Rutas de Google ===============
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
+
 
 require __DIR__.'/auth.php';

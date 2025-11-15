@@ -46,6 +46,7 @@
                 <x-primary-button class="ms-3">
                     {{ __('Iniciar sesión') }}
                 </x-primary-button>
+                
 
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}"
@@ -56,4 +57,14 @@
             </div>
         </div>
     </form>
+
+    <!-- Login con Google -->
+    <div class="mt-8 text-center">
+        <a href="{{ route('google.redirect') }}" 
+            class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded hover:bg-blue-700">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" 
+                alt="Google" width="20" class="inline-block mr-2">
+            Continuar con Google
+        </a>
+    </div>
 </x-guest-layout>
