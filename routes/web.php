@@ -48,6 +48,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin,organizador'])->group(fu
     Route::get('validation', [QrValidationController::class, 'index'])->name('validation.index');
     Route::get('validation/{evento}', [QrValidationController::class, 'show'])->name('validation.show');
     Route::post('validation/{evento}', [QrValidationController::class, 'validateImage'])->name('validation.validate');
+    Route::get('/validation/{evento}/camera', [QrValidationController::class, 'cameraView'])
+    ->name('validation.camera');
+    
+    Route::post('/validation/{evento}/scan', [QRValidationController::class, 'validateCamera'])
+        ->name('validation.camera.validate');
 });
 
 // =========== Rutas de Notificacion ===============
