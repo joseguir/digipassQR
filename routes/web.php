@@ -19,6 +19,12 @@ Route::get('/evento-detalle/{id}', [ClientesController::class, 'eventoDetalle'])
 Route::middleware(['auth'])->group(function () {
     Route::get('/comprar/{lote}', [ClientesController::class, 'iniciarCompra'])->name('comprar.lote');
     Route::post('/comprar', [ClientesController::class, 'guardarCompra'])->name('comprar.guardar');
+    
+    Route::get('/entradas/confirmacion/{ids}', 
+        [ClientesController::class, 'ticketConfirmacion']
+    )->name('entradas.ticketConfirmacion');
+
+
 });
 
 // =========== Panel Admin / Organizadores / Clientes (solo para entradas) ===============

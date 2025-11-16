@@ -89,7 +89,38 @@
                     <i class="fa-solid fa-credit-card"></i> Tarjeta de crédito/débito
                 </label>
             </div> -->
+
+            <!-- Total dinámico -->
+            <div class="container text-center mt-4">
+                <h3 id="totalPrecio" 
+                    style="padding: 18px; border-radius: 10px; font-size: 26px;
+                        background: #c8e6c9; color: #2e4d33;
+                        border: 1px solid #a5d6a7;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                    Total: ${{ $lote->precio }}
+                </h3>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const precioUnitario = {{ $lote->precio }};
+    const inputCantidad = document.getElementById('cantidad');
+    const totalTexto = document.getElementById('totalPrecio');
+
+    function actualizarTotal() {
+        const cantidad = parseInt(inputCantidad.value) || 1;
+        const total = precioUnitario * cantidad;
+
+        totalTexto.textContent = "Total: $" + total;
+    }
+
+    inputCantidad.addEventListener('input', actualizarTotal);
+
+    // Inicializar al cargar
+    actualizarTotal();
+});
+</script>
 @endsection

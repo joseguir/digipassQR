@@ -50,23 +50,61 @@ class ClientesController extends Controller
     
     public function guardarCompra(Request $request)
     {
-        // dd($request->all());
-
         $request->validate([
             'lote_id'    => 'required|exists:lotes,id',
             'usuario_id' => 'required|exists:users,id',
-            // 'estado_id'  => 'required|exists:estados_entrada,id',
+            'cantidad'   => 'required|integer|min:1',
         ]);
 
-        $entrada = Entrada::create([
-            'lote_id'     => $request->lote_id,
-            'usuario_id'  => $request->usuario_id,
-            'codigo_qr'   => Str::uuid(), // genera código único
-            'estado_id'   => 2, //no usada
-            'fecha_compra'=> now(),
-        ]);
+        $entradaIds = [];
 
-        return redirect()->route('entradas.show', $entrada)
-                     ->with('success', '¡Compra realizada con éxito!');
+        for ($i = 0; $i < $request->cantidad; $i++) {
+            $entrada = Entrada::create([
+                'lote_id'      => $request->lote_id,
+                'usuario_id'   => $request->usuario_id,
+                'codigo_qr'    => Str::uuid(),
+                'estado_id'    => 2,
+                'fecha_compra' => now(),
+                'is_used'      => false,
+            ]);
+
+            $entradaIds[] = $entrada->id;
+        }
+
+        return redirect()
+            ->route('entradas.ticketConfirmacion', ['ids' => implode(',', $entradaIds)])
+            ->with('success', '¡Compra realizada con éxito!');
     }
+
+
+    
+    public function ticketConfirmacion($ids)
+    {
+        $idsArray = explode(',', $ids);
+
+        $entradas = Entrada::with('lote.evento', 'usuario')
+            ->whereIn('id', $idsArray)
+            ->get();
+
+        if ($entradas->isEmpty()) {
+            abort(404);
+        }
+
+        // Seguridad: evitar ver entradas ajenas
+        foreach ($entradas as $entrada) {
+            if ($entrada->usuario_id !== auth()->id()) {
+                abort(403);
+            }
+        }
+
+        $usuario = $entradas->first()->usuario;
+        $lote = $entradas->first()->lote;
+        $evento = $lote->evento;
+
+        return view('frontend.pages.ticket-factura', compact(
+            'entradas', 'usuario', 'lote', 'evento'
+        ));
+    }
+
+
 }
