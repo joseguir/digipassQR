@@ -56,6 +56,18 @@ class ClientesController extends Controller
             'cantidad'   => 'required|integer|min:1',
         ]);
 
+        $lote = Lote::findOrFail($request->lote_id);
+
+        // Validación: stock suficiente
+        if ($lote->cantidad < $request->cantidad) {
+            return back()->with('error', 'No hay suficientes entradas disponibles en este lote.');
+        }
+
+        // Restar cantidad del lote
+        $lote->cantidad -= $request->cantidad;
+        $lote->save();
+
+        // Crear entradas
         $entradaIds = [];
 
         for ($i = 0; $i < $request->cantidad; $i++) {
@@ -75,6 +87,7 @@ class ClientesController extends Controller
             ->route('entradas.ticketConfirmacion', ['ids' => implode(',', $entradaIds)])
             ->with('success', '¡Compra realizada con éxito!');
     }
+
 
 
     
