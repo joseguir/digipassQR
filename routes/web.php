@@ -12,6 +12,8 @@ use App\Http\Controllers\LoteController;
 use App\Http\Controllers\QrValidationController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\HistorialController;
+
 
 // =========== Frontend de clientes ===============
 Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
@@ -75,5 +77,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 
+// =========== Rutas de Historial ===============
+
+Route::prefix('admin')->middleware(['auth', 'role:cliente,organizador'])->group(function () {
+    Route::get('historial', [HistorialController::class, 'index'])->name('historial.index');
+});
 
 require __DIR__.'/auth.php';

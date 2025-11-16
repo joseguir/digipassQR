@@ -366,6 +366,12 @@ return [
             'can'  => 'cliente', 
         ],
         [
+            'text' => 'Historial',
+            'url'  => 'admin/historial',
+            'icon' => 'fas fa-qrcode',
+            'can'  => 'organizador-or-cliente',
+        ],
+        [
             'text' => 'Validar QR',
             'url'  => 'admin/validation',
             'icon' => 'fas fa-qrcode',

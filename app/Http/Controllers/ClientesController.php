@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Encoding\Encoding;
+use App\Models\HistorialEvento;
 
 class ClientesController extends Controller
 {
@@ -68,6 +69,16 @@ class ClientesController extends Controller
                 'is_used'      => false,
             ]);
         }
+
+
+        // registrar entrada en el historial
+
+        HistorialEvento::create([
+            'user_id'   => $request->usuario_id,  // quien compró
+            'evento_id' => Lote::find($request->lote_id)->evento_id, // obtener evento desde el lote
+            'cantidad'  => $request->cantidad,
+            'tipo_accion' => 'compra',
+        ]);
 
         return redirect()
             ->route('entradas.index')
