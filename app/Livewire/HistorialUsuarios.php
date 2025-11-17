@@ -22,7 +22,10 @@ class HistorialUsuarios extends Component
             ->orderBy('created_at', 'desc')
             ->get();
 
+
         }
+
+        
 
         // Organizador
         if ($user->role_id === 2) { 

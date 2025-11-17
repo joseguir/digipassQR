@@ -24,17 +24,21 @@
         {{-- TRANSFERENCIA ACEPTADA --}}
         {{-- ========================= --}}
         @if ($h->tipo_accion === 'transferencia_aceptada')
-            @if ($h->user_id === auth()->id() && $h->usuario_destino_id != auth()->id())
-                <div class="alert alert-success historial-alert d-flex flex-column gap-2 px-4 py-3 mb-3 shadow-sm rounded-3">
+          {{-- Si yo soy el receptor --}}
+            @if ($h->user_id == auth()->id())
+                <div class="alert alert-success historial-alert ...">
                     <div class="fw-bold">Transferencia aceptada. Ya puedes usar tu entrada.</div>
                     <div class="small text-dark">{{ $h->created_at->format('d/m/Y H:i') }}</div>
                 </div>
-            @elseif ($h->user_id === auth()->id() && $h->usuario_destino_id === auth()->id())
-                <div class="alert alert-success historial-alert d-flex flex-column gap-2 px-4 py-3 mb-3 shadow-sm rounded-3">
+
+            {{-- Si yo soy el que envió la entrada --}}
+            @elseif ($h->usuario_destino_id == auth()->id())
+                <div class="alert alert-success historial-alert ...">
                     <div class="fw-bold">El receptor aceptó tu transferencia.</div>
                     <div class="small text-dark">{{ $h->created_at->format('d/m/Y H:i') }}</div>
                 </div>
             @endif
+
         @endif
 
         {{-- ========================= --}}

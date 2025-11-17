@@ -50,30 +50,20 @@ class NotificacionesUsuario extends Component
             $transferencia->entrada->update(['usuario_id' => Auth::id()]);
             $transferencia->update(['estado' => 'aceptada']);
 
-           // 1) Registrar historial para el RECEPTOR
-            HistorialEvento::create([
-                'user_id'            => Auth::id(), // receptor ejecuta la acción
-                'usuario_destino_id' => $transferencia->remitente_id, // de quién venía
-                'entrada_id'         => $entradaId,
-                'evento_id' => $transferencia->entrada->lote->evento_id,
-                'tipo_accion'        => 'transferencia_aceptada',
-                'descripcion'        => 'Has recibido una entrada de ' . $transferencia->remitente->name,
-            ]);
+           // 1) Registrar historial para la transferencia
 
-             // 2) Registrar historial para el REMITENTE
-             HistorialEvento::create([
-                'user_id'            => $transferencia->remitente_id, // historial del remitente
-                'usuario_destino_id' => Auth::id(), // a quién se le aceptó
-                'entrada_id'         => $entradaId,
-                'evento_id' => $transferencia->entrada->lote->evento_id,
-                'tipo_accion'        => 'transferencia_aceptada',
-                'descripcion'        => Auth::user()->name . ' ha aceptado tu solicitud de transferencia.',
-            ]);
-
+                HistorialEvento::create([
+                    'user_id'            => Auth::id(),                 // receptor (quien aceptó y la recibe)
+                    'usuario_destino_id' => $transferencia->remitente_id, // remitente (quien la envió)
+                    'entrada_id'         => $entradaId,
+                    'evento_id'          => $transferencia->entrada->lote->evento_id,
+                    'tipo_accion'        => 'transferencia_aceptada',
+                    'descripcion'        => 'Has recibido una entrada de ' . $transferencia->remitente->name,
+                ]);
             // Marcar notificación como leída
-            Auth::user()->notifications()->where('id', $notificacionId)->update(['read_at' => now()]);
+             Auth::user()->notifications()->where('id', $notificacionId)->update(['read_at' => now()]);
 
-              DB::commit();
+             DB::commit();
             
             
             $this->cargarNotificaciones();
