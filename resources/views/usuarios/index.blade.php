@@ -15,6 +15,8 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Teléfono</th>
+                <th>DNI</th>
                 <th>Rol</th>
                 <th>Acciones</th>
             </tr>
@@ -25,6 +27,8 @@
                 <td>{{ $usuario->id }}</td>
                 <td>{{ $usuario->name }}</td>
                 <td>{{ $usuario->email }}</td>
+                <td>{{ $usuario->telefono }}</td>
+                <td>{{ $usuario->dni }}</td>
                 <td>{{ $usuario->role->nombre }}</td>
                 <td>
                     <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn btn-sm btn-warning">Editar</a>

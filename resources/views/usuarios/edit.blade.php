@@ -27,6 +27,24 @@
                 <div class="text-danger small">{{ $message }}</div>
             @enderror
         </div>
+        
+        {{-- Teléfono --}}
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" name="telefono" class="form-control" value="{{ old('telefono', $usuario->telefono) }}">
+            @error('telefono')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        {{-- DNI --}}
+        <div class="mb-3">
+            <label for="dni" class="form-label">DNI</label>
+            <input type="text" name="dni" class="form-control" value="{{ old('dni', $usuario->dni) }}">
+            @error('dni')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
 
         {{-- Password: dejar en blanco para no cambiar --}}
         <div class="mb-3">

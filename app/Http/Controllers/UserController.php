@@ -40,6 +40,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
+            'telefono' => 'required|string|max:20',
+            'dni' => 'required|string|max:20',
             'role_id' => 'required|exists:roles,id'
         ]);
 
@@ -47,6 +49,8 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'telefono' => $request->telefono,
+            'dni' => $request->dni,
             'role_id' => $request->role_id
         ]);
 
@@ -81,11 +85,13 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:users,email,' . $usuario->id,
+            'telefono' => 'required|string|max:20',
+            'dni' => 'required|string|max:20',
             'role_id' => 'required|exists:roles,id',
             'password' => 'nullable|string|min:6|confirmed', // nullable: solo cuando se complete
         ]);
 
-        $data = $request->only(['name', 'email', 'role_id']);
+        $data = $request->only(['name', 'email', 'telefono', 'dni', 'role_id']);
 
          if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);

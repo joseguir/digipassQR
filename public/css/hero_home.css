@@ -54,6 +54,9 @@
     font-size: 1rem;
     padding: 0 15px;
     border-radius:7px;
+    display:flex;
+    align-items:center;
+    justify-content: center;
 }
   .presentacion {
     padding: 0 20px;

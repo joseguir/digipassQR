@@ -16,13 +16,19 @@ use App\Http\Controllers\HistorialController;
 
 
 // =========== Frontend de clientes ===============
-Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
+Route::get('/', [ClientesController::class, 'index'])->name('home');
 Route::get('/evento-detalle/{id}', [ClientesController::class, 'eventoDetalle'])->name('eventoDetalle');
 
 // Solo usuarios logueados pueden comprar y ver sus entradas (versión pública)
 Route::middleware(['auth'])->group(function () {
     Route::get('/comprar/{lote}', [ClientesController::class, 'iniciarCompra'])->name('comprar.lote');
     Route::post('/comprar', [ClientesController::class, 'guardarCompra'])->name('comprar.guardar');
+    
+    Route::get('/entradas/confirmacion/{ids}', 
+        [ClientesController::class, 'ticketConfirmacion']
+    )->name('entradas.ticketConfirmacion');
+
+
 });
 
 // =========== Panel Admin / Organizadores / Clientes (solo para entradas) ===============
