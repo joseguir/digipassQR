@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\Entrada;
 use Livewire\Component;
 
+
+
 class EntradasListado extends Component
 {
     public $entradas;
