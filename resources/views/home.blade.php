@@ -26,8 +26,8 @@
                         </ul>
 
                         <div class="btn-container">
-                            <button class="btn-main" data-aos="fade-right" 
-                            data-aos-delay="450">Crear cuenta gratis</button>
+                            <a href="{{ route('register') }}" class="btn-main" data-aos="fade-right" 
+                            data-aos-delay="450">Crear cuenta gratis</a>
                             <button class="btn btn-warning">Contáctanos</button>
 
                         </div>

@@ -6,6 +6,10 @@ use Livewire\Component;
 use App\Models\Transferencia;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\DB;
+use App\Models\HistorialEvento;
+
+
 
 
 
@@ -27,6 +31,11 @@ class NotificacionesUsuario extends Component
 
     public function aceptar($entradaId, $notificacionId)
     {
+
+         try {
+            DB::beginTransaction();
+
+        
           $transferencia = Transferencia::where('entrada_id', $entradaId)
             ->where('receptor_id', Auth::id())
             ->where('estado', 'pendiente')
@@ -41,11 +50,35 @@ class NotificacionesUsuario extends Component
             $transferencia->entrada->update(['usuario_id' => Auth::id()]);
             $transferencia->update(['estado' => 'aceptada']);
 
-            // Marcar notificación como leída
-            Auth::user()->notifications()->where('id', $notificacionId)->update(['read_at' => now()]);
+           // 1) Registrar historial para la transferencia
 
+                HistorialEvento::create([
+                    'user_id'            => Auth::id(),                 // receptor (quien aceptó y la recibe)
+                    'usuario_destino_id' => $transferencia->remitente_id, // remitente (quien la envió)
+                    'entrada_id'         => $entradaId,
+                    'evento_id'          => $transferencia->entrada->lote->evento_id,
+                    'tipo_accion'        => 'transferencia_aceptada',
+                    'descripcion'        => 'Has recibido una entrada de ' . $transferencia->remitente->name,
+                ]);
+            // Marcar notificación como leída
+             Auth::user()->notifications()->where('id', $notificacionId)->update(['read_at' => now()]);
+
+             DB::commit();
+            
+            
             $this->cargarNotificaciones();
             session()->flash('success', 'Transferencia aceptada correctamente.');
+
+              } catch (\Throwable $e) {
+
+                DB::rollBack();
+
+                dd($e->getMessage(), $e->getTraceAsString());
+
+                \Log::error('Error al aceptar transferencia: ' . $e->getMessage());
+
+                session()->flash('error', 'Ocurrió un error al procesar la transferencia.');
+            }
     }
 
      public function rechazar($entradaId, $notificacionId)

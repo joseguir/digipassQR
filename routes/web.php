@@ -12,15 +12,23 @@ use App\Http\Controllers\LoteController;
 use App\Http\Controllers\QrValidationController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\HistorialController;
+
 
 // =========== Frontend de clientes ===============
-Route::get('/', [ClientesController::class, 'index'])->name('dashboard');
+Route::get('/', [ClientesController::class, 'index'])->name('home');
 Route::get('/evento-detalle/{id}', [ClientesController::class, 'eventoDetalle'])->name('eventoDetalle');
 
 // Solo usuarios logueados pueden comprar y ver sus entradas (versión pública)
 Route::middleware(['auth'])->group(function () {
     Route::get('/comprar/{lote}', [ClientesController::class, 'iniciarCompra'])->name('comprar.lote');
     Route::post('/comprar', [ClientesController::class, 'guardarCompra'])->name('comprar.guardar');
+    
+    Route::get('/entradas/confirmacion/{ids}', 
+        [ClientesController::class, 'ticketConfirmacion']
+    )->name('entradas.ticketConfirmacion');
+
+
 });
 
 // =========== Panel Admin / Organizadores / Clientes (solo para entradas) ===============
@@ -75,5 +83,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 
+// =========== Rutas de Historial ===============
+
+Route::prefix('admin')->middleware(['auth', 'role:cliente,organizador'])->group(function () {
+    Route::get('historial', [HistorialController::class, 'index'])->name('historial.index');
+});
 
 require __DIR__.'/auth.php';

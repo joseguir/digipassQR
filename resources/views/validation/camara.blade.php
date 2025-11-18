@@ -38,7 +38,7 @@
   <script src="https://unpkg.com/html5-qrcode"></script>
 
 <script>
-     console.log("STEP 1: El script se está ejecutando.");
+     
 
     // Verificar si la librería está disponible
     if (typeof Html5Qrcode === "undefined") {
@@ -59,13 +59,13 @@
             return;
         }
 
-        console.log("STEP 4.2: ✅ Cámara encontrada:", devices[0]);
+        
 
         // PASO 4.3 — Preparar lector QR
         const cameraId = devices[0].id;
         const html5Qr = new Html5Qrcode("reader");
 
-        console.log("STEP 5: Intentando iniciar la cámara...");
+        // iniciar camara
 
         html5Qr.start(
             cameraId,
@@ -74,7 +74,7 @@
                 console.log("STEP 6: QR DETECTADO:", decodedText);
 
                 // -------------- STEP 7 ----------------
-                console.log("STEP 7: Deteniendo cámara...");
+                // detener camara
 
                 try {
                     await html5Qr.stop();

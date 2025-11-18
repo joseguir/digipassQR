@@ -9,6 +9,7 @@ use App\Models\Transferencia;
 use App\Notifications\TransferenciaRecibida;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
+use App\Models\HistorialEvento;
 
 use Livewire\Attributes\On;
 
@@ -61,12 +62,23 @@ class TransferirEntrada extends Component
             return;
         }
 
+        $eventoId = $entrada->lote->evento_id;
+
         // Crear transferencia
         Transferencia::create([
             'entrada_id' => $entrada->id,
             'remitente_id' => $remitente->id,
             'receptor_id' => $receptor->id,
             'estado' => 'pendiente',
+        ]);
+
+        // registrar solicitud de tranferencia
+        HistorialEvento::create([
+            'user_id' => $remitente->id,
+            'usuario_destino_id' => $receptor->id,
+            'evento_id' => $eventoId,
+            'cantidad' => 1,
+            'tipo_accion' => 'solicitud_transferencia',
         ]);
 
         $receptor->notify(new TransferenciaRecibida($entrada, $remitente));

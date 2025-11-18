@@ -36,6 +36,18 @@
                         <input type="email" name="email" class="form-control" value="{{ old('email') }}" require>
                     </div>
 
+                    {{-- Teléfono --}}
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" class="form-control" value="{{ old('telefono') }}" required>
+                    </div>
+
+                    {{-- DNI --}}
+                    <div class="mb-3">
+                        <label for="dni" class="form-label">DNI</label>
+                        <input type="text" name="dni" class="form-control" value="{{ old('dni') }}" required>
+                    </div>
+
                     {{-- Password --}}
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>

@@ -38,6 +38,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('cliente', function ($user) {
             return $user->role_id === 3; // 3 = cliente
         });
+
+         Gate::define('organizador-or-cliente', function ($user) {
+            return in_array($user->role->nombre, ['organizador', 'cliente']);
+        });
         // Puerta que sirve para admin y organizador
         Gate::define('admin-or-organizador', function ($user) {
             return in_array($user->role->nombre, ['admin', 'organizador']);

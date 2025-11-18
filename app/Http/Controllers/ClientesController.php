@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Encoding\Encoding;
+use App\Models\HistorialEvento;
 
 class ClientesController extends Controller
 {
@@ -45,32 +46,89 @@ class ClientesController extends Controller
         $lote = Lote::findOrFail($loteId);
         $evento = $lote->evento;
         
-        return view('frontend.pages.comprar', compact('lote', 'evento'));
+        return view('frontend.pages.comprar', compact('lote', 'evento', 'user'));
     }
     
     public function guardarCompra(Request $request)
     {
-        // dd($request->all());
-
         $request->validate([
         'lote_id'    => 'required|exists:lotes,id',
         'usuario_id' => 'required|exists:users,id',
         'cantidad'   => 'required|integer|min:1',
             ]);
 
+       
+        $lote = Lote::findOrFail($request->lote_id);
+
+        // Validación: stock suficiente
+        if ($lote->cantidad < $request->cantidad) {
+            return back()->with('error', 'No hay suficientes entradas disponibles en este lote.');
+        }
+
+        // Restar cantidad del lote
+        $lote->cantidad -= $request->cantidad;
+        $lote->save();
+
+        // Crear entradas
+        $entradaIds = [];
+
         for ($i = 0; $i < $request->cantidad; $i++) {
-            Entrada::create([
+            $entrada = Entrada::create([
                 'lote_id'      => $request->lote_id,
                 'usuario_id'   => $request->usuario_id,
                 'codigo_qr'    => Str::uuid(),
-                'estado_id'    => 2, // opcional, si lo vas a eliminar después
+                'estado_id'    => 2,
                 'fecha_compra' => now(),
                 'is_used'      => false,
             ]);
+
+            $entradaIds[] = $entrada->id;
         }
 
+          // registrar entrada en el historial
+
+        HistorialEvento::create([
+            'user_id'   => $request->usuario_id,  // quien compró
+            'evento_id' => Lote::find($request->lote_id)->evento_id, // obtener evento desde el lote
+            'cantidad'  => $request->cantidad,
+            'tipo_accion' => 'compra',
+        ]);
+
         return redirect()
-            ->route('entradas.index')
-            ->with('success', '¡Compra realizada con éxito! Se generaron ' . $request->cantidad . ' entradas.');
+            ->route('entradas.ticketConfirmacion', ['ids' => implode(',', $entradaIds)])
+            ->with('success', '¡Compra realizada con éxito!');
+    }
+
+
+
+    
+    public function ticketConfirmacion($ids)
+    {
+        $idsArray = explode(',', $ids);
+
+        $entradas = Entrada::with('lote.evento', 'usuario')
+            ->whereIn('id', $idsArray)
+            ->get();
+
+        if ($entradas->isEmpty()) {
+            abort(404);
         }
+
+        // Seguridad: evitar ver entradas ajenas
+        foreach ($entradas as $entrada) {
+            if ($entrada->usuario_id !== auth()->id()) {
+                abort(403);
+            }
+        }
+
+        $usuario = $entradas->first()->usuario;
+        $lote = $entradas->first()->lote;
+        $evento = $lote->evento;
+
+        return view('frontend.pages.ticket-factura', compact(
+            'entradas', 'usuario', 'lote', 'evento'
+        ));
+    }
+
+
 }
