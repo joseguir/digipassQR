@@ -82,7 +82,7 @@ class QrValidationController extends Controller
             return response()->json(['error' => 'QR vacío'], 400);
         }
 
-        // Buscar la entrada como lo hacías antes
+        
         $entrada = Entrada::with(['lote.evento.usuario'])
             ->where('codigo_qr', $qr)
             ->whereHas('lote', function($q) use ($evento) {
@@ -93,6 +93,20 @@ class QrValidationController extends Controller
         if (!$entrada) {
             return response()->json(['error' => 'Entrada no encontrada'], 404);
         }
+
+        // Ya fue usada
+        if ($entrada->is_used) {
+            return response()->json([
+                'success' => false,
+                'used' => true,
+                'message' => 'Esta entrada ya fue utilizada.',
+                'entrada' => $entrada
+            ], 400);
+        }
+
+        // Todo OK → marcar como usada
+        $entrada->is_used = true;
+        $entrada->save();
 
         return response()->json([
             'success' => true,

@@ -46,13 +46,25 @@
         {{-- ========================= --}}
         @if ($h->tipo_accion === 'compra')
             <div class="alert alert-primary historial-alert d-flex flex-column gap-2 px-4 py-3 mb-3 shadow-sm rounded-3">
+        
                 <div class="fw-semibold">
-                    Compraste 
-                    <span class="fw-bold mx-1">{{ $h->cantidad }}</span>
-                    entrada{{ $h->cantidad > 1 ? 's' : '' }} para el evento 
-                    <span class="fw-bold ms-1">{{ $h->evento->titulo }}</span>.
+
+                    @if (auth()->user()->role_id == 3)
+                        {{-- MENSAJE PARA CLIENTE --}}
+                        Compraste 
+                        <span class="fw-bold mx-1">{{ $h->cantidad }}</span>
+                        entrada{{ $h->cantidad > 1 ? 's' : '' }} para el evento 
+                        <span class="fw-bold ms-1">{{ $h->evento->titulo }}</span>.
+                    
+                    @elseif (auth()->user()->role_id == 2)
+                        {{-- MENSAJE PARA ORGANIZADOR --}}
+                        Te compraron 
+                        <span class="fw-bold mx-1">{{ $h->cantidad }}</span>
+                        entrada{{ $h->cantidad > 1 ? 's' : '' }} del evento 
+                        <span class="fw-bold ms-1">{{ $h->evento->titulo }}</span>.
+                    @endif
+
                 </div>
-                <div class="small text-dark">{{ $h->created_at->format('d/m/Y H:i') }}</div>
             </div>
         @endif
 

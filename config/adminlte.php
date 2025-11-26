@@ -332,7 +332,7 @@ return [
         ],
         [
             'text' => 'profile',
-            'url' => 'admin/settings',
+            'url' => 'admin',
             'icon' => 'fas fa-fw fa-user',
             'can' => 'cliente',
         ],

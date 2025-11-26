@@ -82,7 +82,7 @@
                         </div>
                         <div class="mt-3 btn-container">
                             <a href="{{ route('eventoDetalle', $evento->id) }}" class="btn btn-primary w-100">
-                                Comprar Entredas
+                                Comprar Entradas
                             </a>
                         </div>
                     </div>

@@ -203,11 +203,6 @@
                             <th>Registrado el:</th>
                             <td>{{ auth()->user()->created_at->format('d/m/Y') }}</td>
                         </tr>
-
-                        <tr>
-                            <th>Rol:</th>
-                            <td><span class="badge badge-primary">Cliente</span></td>
-                        </tr>
                     </table>
 
                 </div>

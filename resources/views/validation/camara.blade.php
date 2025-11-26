@@ -23,11 +23,38 @@
         border-radius:10px;
         border:2px solid #28a745;
         background:#eaffea;
-    ">
+        ">
         <h3>Entrada Validada</h3>
         <p><strong>Comprador:</strong> <span id="res-nombre"></span></p>
         <p><strong>Lote:</strong> <span id="res-lote"></span></p>
         <p><strong>Evento:</strong> <span id="res-evento"></span></p>
+    </div>
+
+    <div id="error-box" style="
+            display:none;
+            margin-top:20px;
+            padding:20px;
+            border-radius:10px;
+            border:2px solid #dc3545;
+            background:#ffeaea;
+        ">
+        <h3>Error en la entrada</h3>
+        <p id="res-error-msg" style="font-weight:bold;"></p>
+    </div>
+
+    <div id="used-box" style="
+            display:none;
+            margin-top:20px;
+            padding:20px;
+            border-radius:10px;
+            border:2px solid #fd7e14;
+            background:#fff4e5;
+     ">
+        <h3 style="color:#d67f00;">Entrada ya utilizada</h3>
+        <p><strong>Comprador:</strong> <span id="used-nombre"></span></p>
+        <p><strong>Evento:</strong> <span id="used-evento"></span></p>
+        <p><strong>Lote:</strong> <span id="used-lote"></span></p>
+        <p id="res-used-msg" style="font-weight:bold; color:#b35a00;"></p>
     </div>
 
 
@@ -121,20 +148,53 @@
                 if (data.success) {
                     console.log("STEP 9.2: ✅ Entrada válida:", data);
 
-                      console.log("STEP 9.2: ✅ Entrada válida:", data);
+                
 
-                document.getElementById("res-nombre").innerText =
-                    data?.entrada?.lote?.evento?.usuario?.name ?? "Desconocido";
+                    document.getElementById("res-nombre").innerText =
+                        data?.entrada?.lote?.evento?.usuario?.name ?? "Desconocido";
 
-                document.getElementById("res-lote").innerText =
-                    data?.entrada?.lote?.nombre ?? "Sin lote";
+                    document.getElementById("res-lote").innerText =
+                        data?.entrada?.lote?.nombre ?? "Sin lote";
 
-                document.getElementById("res-evento").innerText =
-                    data?.entrada?.lote?.evento?.titulo ?? "Evento no encontrado";
+                    document.getElementById("res-evento").innerText =
+                        data?.entrada?.lote?.evento?.titulo ?? "Evento no encontrado";
 
-                document.getElementById("result-box").style.display = "block";
+                    document.getElementById("result-box").style.display = "block";
+
+                    // Mostrar OK
+                    document.getElementById("result-box").style.display = "block";
+                    document.getElementById("error-box").style.display = "none";
+
                 } else {
-                    console.log("STEP 9.3 ❌ Entrada inválida:", data);
+                    if (data.used === true || (data.message && data.message.includes("ya fue utilizada"))) {
+
+                            document.getElementById("used-box").style.display = "block";
+
+                            // Mostrar mensaje principal
+                            document.getElementById("res-used-msg").innerText = data.message;
+
+                            // Rellenar datos del comprador
+                            document.getElementById("used-nombre").innerText =
+                                data?.entrada?.lote?.evento?.usuario?.name ?? "Desconocido";
+
+                            document.getElementById("used-evento").innerText =
+                                data?.entrada?.lote?.evento?.titulo ?? "Evento no encontrado";
+
+                            document.getElementById("used-lote").innerText =
+                                data?.entrada?.lote?.nombre ?? "Sin lote";
+
+                            // Ocultar el resto
+                            document.getElementById("result-box").style.display = "none";
+                            document.getElementById("error-box").style.display = "none";
+                    } else {
+                        // Cualquier otro error
+                        document.getElementById("result-box").style.display = "none";
+                        document.getElementById("used-box").style.display = "none";
+
+                        document.getElementById("error-box").style.display = "block";
+                        document.getElementById("res-error-msg").innerText =
+                            data.message ?? "QR inválido o no encontrado";
+                    }
                 }
             })
             .catch(error => {
