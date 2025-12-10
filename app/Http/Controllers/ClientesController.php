@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Encoding\Encoding;
+use App\Models\HistorialEvento;
 
 class ClientesController extends Controller
 {
@@ -51,11 +52,12 @@ class ClientesController extends Controller
     public function guardarCompra(Request $request)
     {
         $request->validate([
-            'lote_id'    => 'required|exists:lotes,id',
-            'usuario_id' => 'required|exists:users,id',
-            'cantidad'   => 'required|integer|min:1',
-        ]);
+        'lote_id'    => 'required|exists:lotes,id',
+        'usuario_id' => 'required|exists:users,id',
+        'cantidad'   => 'required|integer|min:1',
+            ]);
 
+       
         $lote = Lote::findOrFail($request->lote_id);
 
         // Validación: stock suficiente
@@ -82,6 +84,15 @@ class ClientesController extends Controller
 
             $entradaIds[] = $entrada->id;
         }
+
+          // registrar entrada en el historial
+
+        HistorialEvento::create([
+            'user_id'   => $request->usuario_id,  // quien compró
+            'evento_id' => Lote::find($request->lote_id)->evento_id, // obtener evento desde el lote
+            'cantidad'  => $request->cantidad,
+            'tipo_accion' => 'compra',
+        ]);
 
         return redirect()
             ->route('entradas.ticketConfirmacion', ['ids' => implode(',', $entradaIds)])

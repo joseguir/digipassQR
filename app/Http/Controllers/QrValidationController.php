@@ -69,4 +69,49 @@ class QrValidationController extends Controller
         ]);
      }
 
+     public function cameraView(Evento $evento)
+    {
+        return view('validation.camara', compact('evento'));
+    }
+
+   public function validateCamera(Request $request, Evento $evento)
+    {
+        $qr = $request->input('qr_text');
+
+        if (!$qr) {
+            return response()->json(['error' => 'QR vacío'], 400);
+        }
+
+        
+        $entrada = Entrada::with(['lote.evento.usuario'])
+            ->where('codigo_qr', $qr)
+            ->whereHas('lote', function($q) use ($evento) {
+                $q->where('evento_id', $evento->id);
+            })
+            ->first();
+
+        if (!$entrada) {
+            return response()->json(['error' => 'Entrada no encontrada'], 404);
+        }
+
+        // Ya fue usada
+        if ($entrada->is_used) {
+            return response()->json([
+                'success' => false,
+                'used' => true,
+                'message' => 'Esta entrada ya fue utilizada.',
+                'entrada' => $entrada
+            ], 400);
+        }
+
+        // Todo OK → marcar como usada
+        $entrada->is_used = true;
+        $entrada->save();
+
+        return response()->json([
+            'success' => true,
+            'entrada' => $entrada
+        ]);
+    }
 }
+

@@ -22,17 +22,8 @@ class EntradaController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
 
-        $entradas = Entrada::with(['lote.evento', 'usuario', 'estado'])
-            ->when($user->role_id == 3, function ($query) use ($user) {
-                // Si es cliente, solo mostrar sus propias entradas
-                $query->where('usuario_id', $user->id);
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('entradas.index', compact('entradas'));
+       return view('entradas.index');
     }
 
 
@@ -40,7 +31,7 @@ class EntradaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+   /*  public function create()
     {
         //
         $lotes = Lote::with('evento')->get();
@@ -48,12 +39,12 @@ class EntradaController extends Controller
         $estados = EstadoEntrada::all();
 
         return view('entradas.create', compact('lotes', 'usuarios', 'estados'));
-    }
+    } */
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    /* public function store(Request $request)
     {
         //
         $request->validate([
@@ -71,7 +62,7 @@ class EntradaController extends Controller
         ]);
 
         return redirect()->route('entradas.index')->with('success', 'Entrada creada correctamente');
-    }
+    } */
 
     /**
      * Display the specified resource.
@@ -102,14 +93,14 @@ class EntradaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Entrada $entrada)
+  /*   public function destroy(Entrada $entrada)
     {
         //
 
         $entrada->delete(); // elimina la entrada
         return redirect()->route('entradas.index')
                         ->with('success', 'Entrada eliminada correctamente');
-    }
+    } */
 
     public function descargarQr(Entrada $entrada)
     {

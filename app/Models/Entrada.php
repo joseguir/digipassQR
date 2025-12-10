@@ -20,7 +20,8 @@ class Entrada extends Model
         'usuario_id',
         'codigo_qr',
         'estado_id',
-        'fecha_compra'
+        'fecha_compra',
+        'is_used'
     ];
 
     public function lote()
@@ -36,5 +37,10 @@ class Entrada extends Model
     public function estado()
     {
         return $this->belongsTo(EstadoEntrada::class, 'estado_id');
+    }
+
+    public function transferencias()
+    {
+        return $this->hasMany(Transferencia::class);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\HtmlString;
+
 return [
 
     /*
@@ -324,13 +326,21 @@ return [
             'text' => 'Inicio',
             'url' => 'admin',
             'icon' => 'far fa-fw fa-file',
+            'can' => 'admin-or-organizador',
             // 'label' => 4,
             // 'label_color' => 'success',
         ],
         [
-        'text' => 'Eventos',
-        'url'  => 'admin/eventos', 
-        'icon' => 'fas fa-calendar-alt', // ícono FontAwesome
+            'text' => 'profile',
+            'url' => 'admin',
+            'icon' => 'fas fa-fw fa-user',
+            'can' => 'cliente',
+        ],
+        [
+            'text' => 'Eventos',
+            'url'  => 'admin/eventos', 
+            'icon' => 'fas fa-calendar-alt', // ícono FontAwesome
+            'can'  => 'admin-or-organizador',
         ],
         [
             'text' => 'Usuarios',
@@ -348,7 +358,7 @@ return [
             'text' => 'Lotes',
             'url'  => 'admin/lotes',
             'icon' => 'fas fa-layer-group',
-            'can'  => 'admin-or-organizador',
+            'can'  => 'organizador',
         ],
         [
             'text' => 'Entradas',
@@ -357,61 +367,28 @@ return [
             'can'  => 'admin-or-organizador-or-cliente',
         ],
         [
+            'text' => 'Notificaciones',
+            'url'  => 'admin/notificaciones', // la ruta a tu controlador o vista
+            'icon' => 'fas fa-bell',
+            'can'  => 'cliente', 
+        ],
+        [
+            'text' => 'Historial',
+            'url'  => 'admin/historial',
+            'icon' => 'fas fa-qrcode',
+            'can'  => 'organizador-or-cliente',
+        ],
+        [
             'text' => 'Validar QR',
             'url'  => 'admin/validation',
             'icon' => 'fas fa-qrcode',
-            'can'  => 'admin-or-organizador',
+            'can'  => 'organizador',
         ],
         
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ]
+        /* ['header' => 'account_settings'], */
+        
+        
+        
         
     ],
 
@@ -435,6 +412,8 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
+        /* Filtro personalizado */
+        App\Http\Filters\EntradasMenuFilter::class,
     ],
 
     /*

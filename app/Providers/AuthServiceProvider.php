@@ -4,12 +4,17 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Evento;
+use App\Policies\EventoPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
      */
+
+    
+
     public function register(): void
     {
         //
@@ -29,6 +34,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('organizador', function ($user) {
             return $user->role->nombre === 'organizador';
         });
+
+        Gate::define('cliente', function ($user) {
+            return $user->role_id === 3; // 3 = cliente
+        });
+
+         Gate::define('organizador-or-cliente', function ($user) {
+            return in_array($user->role->nombre, ['organizador', 'cliente']);
+        });
         // Puerta que sirve para admin y organizador
         Gate::define('admin-or-organizador', function ($user) {
             return in_array($user->role->nombre, ['admin', 'organizador']);
@@ -37,5 +50,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin-or-organizador-or-cliente', function ($user) {
             return in_array($user->role->nombre, ['admin', 'organizador', 'cliente']);
         });
+
     }
 }

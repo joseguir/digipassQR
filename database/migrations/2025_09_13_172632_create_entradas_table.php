@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('lote_id')->constrained()->onDelete('cascade');       // Relación con Lotes
             $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade'); // Relación con Usuarios
             $table->string('codigo_qr')->unique();
-            $table->foreignId('estado_id')->constrained('estados_entrada')->onDelete('cascade'); // Relación con EstadoEntrada
+            $table->foreignId('estado_id')->constrained('estados_entrada')->onDelete('cascade');  // Relación con EstadoEntrada
+            $table->boolean('is_used')->default(false); 
             $table->dateTime('fecha_compra');
             
             $table->timestamps();

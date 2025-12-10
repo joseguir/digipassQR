@@ -4,6 +4,10 @@
 
 @section('content_header')
     <h1>Validar Entrada por QR</h1>
+
+    <a href="{{ route('validation.camera', $evento) }}" class="btn btn-info mt-2">
+        Validar con Cámara
+    </a>
 @stop
 
 @section('content')
