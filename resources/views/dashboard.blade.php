@@ -200,6 +200,21 @@
                         </tr>
 
                         <tr>
+                            <th>Teléfono:</th>
+                            <td>{{ auth()->user()->telefono }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>DNI:</th>
+                            <td>{{ auth()->user()->dni }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Rol de usuario:</th>
+                            <td>{{ auth()->user()->role?->nombre }}</td>
+                        </tr>
+
+                        <tr>
                             <th>Registrado el:</th>
                             <td>{{ auth()->user()->created_at->format('d/m/Y') }}</td>
                         </tr>

@@ -69,9 +69,9 @@
 
     // Verificar si la librería está disponible
     if (typeof Html5Qrcode === "undefined") {
-        console.log("STEP 2: ❌ Html5Qrcode NO está definido. (unpkg no cargó)");
+        console.log("STEP 2:  Html5Qrcode NO está definido. (unpkg no cargó)");
     } else {
-        console.log("STEP 2: ✅ Html5Qrcode está cargado correctamente desde unpkg.");
+        console.log("STEP 2:  Html5Qrcode está cargado correctamente desde unpkg.");
     }
 
     // PASO 3: intentar obtener cámaras
@@ -82,7 +82,7 @@
         console.log("STEP 4: Lista de cámaras detectadas:", devices);
 
         if (!devices || devices.length === 0) {
-            console.log("STEP 4.1: ❌ No hay cámaras disponibles.");
+            console.log("STEP 4.1:  No hay cámaras disponibles.");
             return;
         }
 
@@ -105,7 +105,7 @@
 
                 try {
                     await html5Qr.stop();
-                    console.log("STEP 7.1: 📌 Cámara detenida correctamente.");
+                    console.log("STEP 7.1:  Cámara detenida correctamente.");
                 } catch (err) {
                     console.log("STEP 7 ERROR al detener cámara:", err);
                 }
@@ -116,11 +116,11 @@
                 const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
                 if (!uuidRegex.test(decodedText)) {
-                    console.log("STEP 8.1 ❌ QR inválido o no es UUID:", decodedText);
+                    console.log("STEP 8.1  QR inválido o no es UUID:", decodedText);
                     return; // no seguimos porque no es válido
                 }
 
-                console.log("STEP 8.2 ✅ UUID válido:", decodedText);
+                console.log("STEP 8.2  UUID válido:", decodedText);
 
                 // STEP 9: Enviar UUID al backend con fetch()
         console.log("STEP 9: Preparando POST al backend...");
@@ -146,7 +146,7 @@
                 console.log("STEP 9.1: Respuesta del backend:", data);
 
                 if (data.success) {
-                    console.log("STEP 9.2: ✅ Entrada válida:", data);
+                    console.log("STEP 9.2:  Entrada válida:", data);
 
                 
 
@@ -204,7 +204,7 @@
                 }
             )
             .then(() => {
-                console.log("STEP 5.1: ✅ Cámara iniciada correctamente.");
+                console.log("STEP 5.1:  Cámara iniciada correctamente.");
             })
             .catch(err => {
                 console.log("STEP 5 ERROR: No se pudo iniciar la cámara:", err);

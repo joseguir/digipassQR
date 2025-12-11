@@ -16,7 +16,7 @@
                     </div>
                     <div class="card-body">
                         <p><strong>Fecha:</strong> {{ $evento->fecha ?? 'Sin fecha' }}</p>
-                        <p><strong>Ubicación:</strong> {{ $evento->ubicacion ?? 'Sin ubicación' }}</p>
+                        <p><strong>Dirección:</strong> {{ $evento->direccion ?? 'Sin ubicación' }}</p>
                         <a href="{{ route('validation.show', $evento) }}" class="btn btn-success">
                             Seleccionar
                         </a>

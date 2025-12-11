@@ -14,6 +14,7 @@
                     <th>Evento</th>
                     <th>Lote</th>
                     <th>Usuario</th>
+                    <!-- <th>Estado</th> -->
                     <th>Estado</th>
                     <th>Código QR</th>
                     <th>Fecha Compra</th>
@@ -27,8 +28,14 @@
                         <td>{{ $entrada->lote->evento->titulo }}</td>
                         <td>{{ $entrada->lote->nombre }}</td>
                         <td>{{ $entrada->usuario->name }}</td>
-                        <td>{{ $entrada->estado->nombre }}</td>
-                        <td>{{ $entrada->codigo_qr }}</td>
+                        <!-- <td>{{-- $entrada->estado->nombre --}}</td> -->
+                        <td>
+                            <span class="badge {{ $entrada->is_used ? 'bg-success' : 'bg-secondary' }}">
+                                {{ $entrada->is_used ? 'Usada' : 'No usada' }}
+                            </span>
+                        </td>
+
+                        <td>{{ $entrada->codigo_qr }}</td> 
                         <td>{{ $entrada->fecha_compra }}</td>
                         <td>
                             <a href="{{ route('entradas.show', $entrada) }}" class="btn btn-info btn-sm">Ver Entrada</a>
@@ -49,6 +56,7 @@
                     </div>
 
                     <div class="card-body">
+                        <p class="mb-2"><strong>Id:</strong> {{ $entrada->id }}</p>
                         <p class="mb-2"><strong>Lote:</strong> {{ $entrada->lote->nombre }}</p>
                         <p class="mb-2"><strong>Estado:</strong> {{ $entrada->estado->nombre ?? '—' }}</p>
                         <p class="mb-2">
@@ -91,7 +99,7 @@
         @endforeach
     </div>
 
-{{-- 🔹 Solo un componente de transferencia (fuera del foreach) --}}
+{{--  Solo un componente de transferencia (fuera del foreach) --}}
 <livewire:transferir-entrada />
 
 
