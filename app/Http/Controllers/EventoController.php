@@ -18,10 +18,26 @@ class EventoController extends Controller
      */
     public function index()
     {
-        //
-        $eventos = Evento::where('user_id', auth()->id())->get();
+        // Trae todos los eventos del usuario con sus lotes y entradas (aunque no tengan)
+        $eventos = Evento::with(['lotes.entradas'])
+            ->where('user_id', auth()->id())
+            ->get()
+            ->map(function ($evento) {
+                // Calcular el total vendido solo si tiene lotes y entradas
+                $evento->total_vendido = 0;
+
+                foreach ($evento->lotes as $lote) {
+                    if ($lote->entradas && $lote->entradas->count() > 0) {
+                        $evento->total_vendido += $lote->entradas->count() * $lote->precio;
+                    }
+                }
+
+                return $evento;
+            });
+
         return view('eventos.index', compact('eventos'));
     }
+
 
     /**
      * Show the form for creating a new resource.

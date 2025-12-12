@@ -74,27 +74,44 @@ class QrValidationController extends Controller
         return view('validation.camara', compact('evento'));
     }
 
-   public function validateCamera(Request $request, Evento $evento)
+    public function validateCamera(Request $request, Evento $evento)
     {
         $qr = $request->input('qr_text');
-
+    
+        // 1 Validar QR vacío
         if (!$qr) {
-            return response()->json(['error' => 'QR vacío'], 400);
+            return response()->json([
+                'success' => false,
+                'message' => 'QR vacío.'
+            ], 400);
         }
-
-        
+    
+        // 2 Buscar la entrada por QR y evento
         $entrada = Entrada::with(['lote.evento.usuario'])
             ->where('codigo_qr', $qr)
             ->whereHas('lote', function($q) use ($evento) {
                 $q->where('evento_id', $evento->id);
             })
             ->first();
-
+    
+        // 3 Entrada no encontrada
         if (!$entrada) {
-            return response()->json(['error' => 'Entrada no encontrada'], 404);
+            return response()->json([
+                'success' => false,
+                'message' => 'Entrada no encontrada para este evento.'
+            ], 404);
         }
-
-        // Ya fue usada
+    
+        // 4 Verificar si el evento ya terminó
+        if ($evento->yaTermino()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'El evento ya terminó. No se pueden validar más entradas.',
+                'entrada' => $entrada
+            ], 400);
+        }
+    
+        // 5 Verificar si ya fue usada
         if ($entrada->is_used) {
             return response()->json([
                 'success' => false,
@@ -103,15 +120,17 @@ class QrValidationController extends Controller
                 'entrada' => $entrada
             ], 400);
         }
-
-        // Todo OK → marcar como usada
+    
+        // 6 Todo OK → marcar como usada
         $entrada->is_used = true;
         $entrada->save();
-
+    
         return response()->json([
             'success' => true,
+            'message' => 'Entrada validada correctamente.',
             'entrada' => $entrada
         ]);
     }
+    
 }
 

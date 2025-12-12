@@ -18,6 +18,7 @@
                     <th>Estado</th>
                     <th>Código QR</th>
                     <th>Fecha Compra</th>
+                    <th>Precio</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -36,7 +37,8 @@
                         </td>
 
                         <td>{{ $entrada->codigo_qr }}</td> 
-                        <td>{{ $entrada->fecha_compra }}</td>
+                        <td>{{ \Carbon\Carbon::parse($entrada->fecha_compra)->format('d/m/Y') }}</td>
+                        <td>${{ number_format($entrada->lote->precio, 2, ',', '.') }}</td>
                         <td>
                             <a href="{{ route('entradas.show', $entrada) }}" class="btn btn-info btn-sm">Ver Entrada</a>
                         </td>
@@ -58,10 +60,15 @@
                     <div class="card-body">
                         <p class="mb-2"><strong>Id:</strong> {{ $entrada->id }}</p>
                         <p class="mb-2"><strong>Lote:</strong> {{ $entrada->lote->nombre }}</p>
-                        <p class="mb-2"><strong>Estado:</strong> {{ $entrada->estado->nombre ?? '—' }}</p>
+                        <p class="mb-2"><strong>Estado:</strong> {{ $entrada->is_used ? 'Usada' : 'No usada' }}</p>
                         <p class="mb-2">
                             <strong>Fecha compra:</strong>
                               {{ \Carbon\Carbon::parse($entrada->fecha_compra)->locale('es')->translatedFormat('j \d\e F Y') }}
+                        </p>
+                        <p class="mb-2">
+                            <strong>Fecha del Evento:</strong>
+                            {{ \Carbon\Carbon::parse($entrada->lote->evento->fecha)->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm') }}
+
                         </p>
                         @if($entrada->transferencias->isNotEmpty())
                             <p class="mb-2">

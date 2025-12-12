@@ -27,6 +27,7 @@
                 <th>Título</th>
                 <th>Fecha</th>
                 <th>Dirección</th>
+                <th>Ganancias</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -44,6 +45,13 @@
                     <td>{{ $evento->titulo }}</td>
                     <td>{{ \Carbon\Carbon::parse($evento->fecha)->format('d/m/Y H:i') }}</td>
                     <td>{{ $evento->direccion }}</td>
+                    <td>
+                        @if($evento->total_vendido > 0)
+                            <strong>${{ number_format($evento->total_vendido, 2, ',', '.') }}</strong>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('eventos.show', $evento) }}" class="btn btn-info btn-sm">Ver</a>
                         <a href="{{ route('eventos.edit', $evento) }}" class="btn btn-warning btn-sm">Editar</a>

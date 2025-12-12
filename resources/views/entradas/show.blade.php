@@ -23,10 +23,17 @@
                     <div class="col-md-6">
                         <p><strong>Precio:</strong> ${{ $entrada->lote->precio }}</p>
                         <p><strong>Usuario:</strong> {{ $entrada->usuario->name }} <br> <small>{{ $entrada->usuario->email }}</small></p>
-                        <p><strong>Estado:</strong> <span class="badge bg-info">{{ ucfirst($entrada->estado->nombre) }}</span></p>
+                        <p><strong>Estado:</strong> <span class="badge bg-info">{{ $entrada->is_used ? 'Usada' : 'No usada' }}</span></p>
                          <p>
                             <strong>Fecha de Compra:</strong>
                             {{ \Carbon\Carbon::parse($entrada->fecha_compra)->locale('es')->isoFormat('D [de] MMMM') }}
+                           
+                        </p>
+                        <p>
+                            <strong>Fecha de Evento:</strong>
+                            {{ \Carbon\Carbon::parse($entrada->lote->evento->fecha)->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm') }}
+
+
                            
                         </p>
                     </div>
